@@ -1,0 +1,11 @@
+{
+ "timestamp": "2026-09-11T00:52:24.353676+00:00",
+ "mode": "DEGRADED",
+ "reason": "Architect stale for 26 minutes \u2014 DEGRADED MODE",
+ "actions": [
+ "Pause all in-flight missions",
+ "Log as blocker",
+ "Notify human directly (not through Architect)",
+ "No new missions accepted"
+ ]
+}

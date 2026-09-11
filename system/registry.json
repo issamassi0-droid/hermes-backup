@@ -1,0 +1,695 @@
+{
+  "$schema": "https://hermes.dev/schemas/system-registry.v1.json",
+  "version": "1.8.0",
+  "created": "2026-09-11T00:00:00+01:00",
+  "generated_by": "deep-dive",
+  "hermes_version": "0.21.1",
+  "install_root": "/home/massi/.hermes",
+  "system_root": "/home/massi/.hermes/system",
+  "description": "Master registry of all agents in the Cabinet-Office multi-agent system. Single source of truth for capabilities, tiering, and pipeline position.",
+  "agents": [
+    {
+      "name": "orchestrator-agent",
+      "handle": "@orchestrator-agent",
+      "role": "Orchestrator",
+      "entrypoint": true,
+      "tiers_served": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "upstream": [],
+      "downstream": [
+        "research-agent-multi",
+        "research-agent-youtube",
+        "strategy-agent",
+        "drafting-agent",
+        "qa-agent",
+        "distribution-agent",
+        "analytics-agent"
+      ],
+      "produces": [
+        "routing_ticket",
+        "macro_schema",
+        "coverage_matrix"
+      ],
+      "consumes": [
+        "user_intent"
+      ],
+      "owns_files": [
+        "system/ledger/*",
+        "system/registry.json",
+        "system/routing.yaml"
+      ],
+      "can_dm": [
+        "research-agent-multi",
+        "research-agent-youtube",
+        "strategy-agent",
+        "drafting-agent",
+        "qa-agent",
+        "distribution-agent",
+        "analytics-agent",
+        "agent-factory"
+      ],
+      "tools": [
+        "web_search",
+        "web_extract",
+        "read_file",
+        "write_file",
+        "terminal",
+        "message_agent",
+        "delegate_task",
+        "todo_list",
+        "session_search",
+        "cronjob_manage"
+      ],
+      "technical_name": "orchestrator-agent",
+      "functional_name": "Orchestrator",
+      "display_name": "المُنسّق"
+    },
+    {
+      "name": "research-agent-multi",
+      "handle": "@research-agent-multi",
+      "role": "Multi-Source Researcher",
+      "entrypoint": false,
+      "tiers_served": [
+        "1",
+        "2",
+        "3"
+      ],
+      "upstream": [
+        "orchestrator-agent"
+      ],
+      "downstream": [
+        "strategy-agent",
+        "research-agent-youtube"
+      ],
+      "produces": [
+        "research_dossier"
+      ],
+      "consumes": [
+        "routing_ticket",
+        "temporal_bounds"
+      ],
+      "owns_files": [
+        "system/ledger/*/research.json"
+      ],
+      "can_dm": [
+        "strategy-agent",
+        "research-agent-youtube",
+        "orchestrator-agent"
+      ],
+      "tools": [
+        "web_search",
+        "web_extract",
+        "read_file",
+        "terminal",
+        "message_agent"
+      ],
+      "technical_name": "research-agent-multi",
+      "functional_name": "Multi-Source Researcher",
+      "display_name": "الباحث"
+    },
+    {
+      "name": "research-agent-youtube",
+      "handle": "@research-agent-youtube",
+      "role": "YouTube Researcher",
+      "entrypoint": false,
+      "tiers_served": [
+        "2",
+        "3"
+      ],
+      "upstream": [
+        "orchestrator-agent",
+        "research-agent-multi"
+      ],
+      "downstream": [
+        "strategy-agent",
+        "research-agent-multi"
+      ],
+      "produces": [
+        "video_experience_synthesis"
+      ],
+      "consumes": [
+        "topic_brief",
+        "routing_ticket"
+      ],
+      "owns_files": [
+        "system/ledger/*/video.json"
+      ],
+      "can_dm": [
+        "strategy-agent",
+        "research-agent-multi",
+        "orchestrator-agent"
+      ],
+      "tools": [
+        "web_search",
+        "web_extract",
+        "read_file",
+        "terminal",
+        "message_agent"
+      ],
+      "technical_name": "research-agent-youtube",
+      "functional_name": "YouTube Researcher",
+      "display_name": "باحث يوتيوب"
+    },
+    {
+      "name": "strategy-agent",
+      "handle": "@strategy-agent",
+      "role": "Strategist",
+      "entrypoint": false,
+      "tiers_served": [
+        "2",
+        "3"
+      ],
+      "upstream": [
+        "orchestrator-agent",
+        "research-agent-multi",
+        "research-agent-youtube"
+      ],
+      "downstream": [
+        "drafting-agent",
+        "research-agent-multi"
+      ],
+      "produces": [
+        "strategy_brief",
+        "structural_blueprint"
+      ],
+      "consumes": [
+        "research_dossier",
+        "video_experience_synthesis"
+      ],
+      "owns_files": [
+        "system/ledger/*/strategy.json"
+      ],
+      "can_dm": [
+        "drafting-agent",
+        "research-agent-multi",
+        "research-agent-youtube",
+        "orchestrator-agent"
+      ],
+      "tools": [
+        "web_search",
+        "web_extract",
+        "read_file",
+        "write_file",
+        "message_agent"
+      ],
+      "technical_name": "strategy-agent",
+      "functional_name": "Strategist",
+      "display_name": "الاستراتيجي"
+    },
+    {
+      "name": "drafting-agent",
+      "handle": "@drafting-agent",
+      "role": "Drafter",
+      "entrypoint": false,
+      "tiers_served": [
+        "2",
+        "3"
+      ],
+      "upstream": [
+        "strategy-agent"
+      ],
+      "downstream": [
+        "qa-agent"
+      ],
+      "produces": [
+        "draft"
+      ],
+      "consumes": [
+        "structural_blueprint",
+        "research_dossier"
+      ],
+      "owns_files": [
+        "system/ledger/*/draft.md"
+      ],
+      "can_dm": [
+        "qa-agent",
+        "strategy-agent",
+        "orchestrator-agent"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal",
+        "message_agent"
+      ],
+      "technical_name": "drafting-agent",
+      "functional_name": "Drafter",
+      "display_name": "الكاتب"
+    },
+    {
+      "name": "qa-agent",
+      "handle": "@qa-agent",
+      "role": "QA Auditor",
+      "entrypoint": false,
+      "tiers_served": [
+        "2",
+        "3"
+      ],
+      "upstream": [
+        "drafting-agent"
+      ],
+      "downstream": [
+        "distribution-agent",
+        "drafting-agent",
+        "orchestrator-agent"
+      ],
+      "produces": [
+        "verification_report",
+        "revision_request"
+      ],
+      "consumes": [
+        "draft",
+        "research_dossier",
+        "strategy_brief"
+      ],
+      "owns_files": [
+        "system/ledger/*/verification.json"
+      ],
+      "can_dm": [
+        "drafting-agent",
+        "orchestrator-agent",
+        "distribution-agent"
+      ],
+      "tools": [
+        "web_search",
+        "web_extract",
+        "read_file",
+        "write_file",
+        "terminal",
+        "message_agent"
+      ],
+      "technical_name": "qa-agent",
+      "functional_name": "QA Auditor",
+      "display_name": "المدقق"
+    },
+    {
+      "name": "distribution-agent",
+      "handle": "@distribution-agent",
+      "role": "Distributor",
+      "entrypoint": false,
+      "tiers_served": [
+        "1",
+        "2",
+        "3"
+      ],
+      "upstream": [
+        "qa-agent",
+        "orchestrator-agent"
+      ],
+      "downstream": [
+        "analytics-agent"
+      ],
+      "produces": [
+        "published_artifact",
+        "deployment_log"
+      ],
+      "consumes": [
+        "approved_draft"
+      ],
+      "owns_files": [
+        "/home/massi/ObsidianVault/Articles/*"
+      ],
+      "can_dm": [
+        "analytics-agent",
+        "orchestrator-agent"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal",
+        "message_agent"
+      ],
+      "technical_name": "distribution-agent",
+      "functional_name": "Distributor",
+      "display_name": "الناشر"
+    },
+    {
+      "name": "analytics-agent",
+      "handle": "@analytics-agent",
+      "role": "Analyst",
+      "entrypoint": false,
+      "tiers_served": [
+        "2",
+        "3"
+      ],
+      "upstream": [
+        "distribution-agent"
+      ],
+      "downstream": [
+        "research-agent-multi",
+        "strategy-agent"
+      ],
+      "produces": [
+        "performance_report",
+        "hypothesis_updates"
+      ],
+      "consumes": [
+        "published_artifact",
+        "strategy_brief"
+      ],
+      "owns_files": [
+        "system/ledger/*/analytics.json"
+      ],
+      "can_dm": [
+        "research-agent-multi",
+        "strategy-agent",
+        "orchestrator-agent"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal",
+        "message_agent",
+        "session_search"
+      ],
+      "technical_name": "analytics-agent",
+      "functional_name": "Analyst",
+      "display_name": "المحلّل"
+    },
+    {
+      "name": "agent-factory",
+      "handle": "@agent-factory",
+      "role": "Agent Factory",
+      "entrypoint": true,
+      "tiers_served": [
+        "all"
+      ],
+      "upstream": [],
+      "downstream": [
+        "orchestrator-agent"
+      ],
+      "produces": [
+        "new_agent_soul",
+        "new_agent_registry_entry"
+      ],
+      "consumes": [
+        "user_intent"
+      ],
+      "owns_files": [
+        "system/registry.json (append-only)"
+      ],
+      "can_dm": [
+        "orchestrator-agent",
+        "analytics-agent"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal",
+        "message_agent",
+        "skill_manage"
+      ],
+      "technical_name": "agent-factory",
+      "functional_name": "Agent Factory",
+      "display_name": "صانع الوكلاء"
+    },
+    {
+      "name": "system-operator",
+      "handle": "@system-operator",
+      "role": "System Operator",
+      "entrypoint": true,
+      "tiers_served": [
+        "0",
+        "1"
+      ],
+      "upstream": [],
+      "downstream": [],
+      "produces": [
+        "system_fix",
+        "shader_update"
+      ],
+      "consumes": [
+        "user_intent"
+      ],
+      "owns_files": [
+        "~/.config/omarchy/*"
+      ],
+      "can_dm": [
+        "orchestrator-agent"
+      ],
+      "tools": [
+        "terminal",
+        "read_file",
+        "write_file",
+        "message_agent",
+        "browser_exec"
+      ],
+      "technical_name": "system-operator",
+      "functional_name": "System Operator",
+      "display_name": "مشغّل النظام"
+    },
+    {
+      "name": "source-monitor",
+      "handle": "@source-monitor",
+      "role": "Source Monitor",
+      "entrypoint": false,
+      "tiers_served": [
+        "monitor"
+      ],
+      "upstream": [],
+      "downstream": [
+        "orchestrator-agent"
+      ],
+      "produces": [
+        "scout_alert"
+      ],
+      "consumes": [
+        "scout_keywords"
+      ],
+      "owns_files": [],
+      "can_dm": [
+        "orchestrator-agent"
+      ],
+      "tools": [
+        "web_search"
+      ],
+      "scout": true,
+      "technical_name": "source-monitor",
+      "functional_name": "Source Monitor",
+      "display_name": "الراصد"
+    }
+  ],
+  "pipeline": {
+    "tier_0": {
+      "stages": [],
+      "agents": []
+    },
+    "tier_1": {
+      "stages": [
+        "research",
+        "publish"
+      ],
+      "agents": [
+        "research-agent-multi",
+        "distribution-agent"
+      ]
+    },
+    "tier_2": {
+      "stages": [
+        "research",
+        "strategy",
+        "draft",
+        "verify",
+        "publish"
+      ],
+      "agents": [
+        "research-agent-multi",
+        "strategy-agent",
+        "drafting-agent",
+        "qa-agent",
+        "distribution-agent"
+      ]
+    },
+    "tier_3": {
+      "stages": [
+        "triage",
+        "research",
+        "video",
+        "strategy",
+        "draft",
+        "verify",
+        "publish",
+        "analyze"
+      ],
+      "agents": [
+        "orchestrator-agent",
+        "research-agent-multi",
+        "research-agent-youtube",
+        "strategy-agent",
+        "drafting-agent",
+        "qa-agent",
+        "distribution-agent",
+        "analytics-agent"
+      ]
+    }
+  },
+  "invariants": [
+    "Architect is the only agent that may open a ledger for a new mission.",
+    "Editor-qa must approve before Publisher may write to any external platform.",
+    "Analytics writes only hypothesis_updates, never directives.",
+    "Bot-maker may append to registry.json but may never edit existing agent entries."
+  ],
+  "vault": {
+    "path": "/home/massi/ObsidianVault/",
+    "shared_directories": {
+      "brand": "Brand/",
+      "research_archive": "Research/",
+      "source_ledger": "Sources/",
+      "templates": "Templates/"
+    },
+    "description": "Shared memory vault. All agents may read. Only orchestrator and librarian profiles may write."
+  },
+  "scout_pattern": {
+    "description": "Lightweight background agent monitoring external sources continuously.",
+    "trigger": "cron or scheduled",
+    "cost": "minimal — one web_search per cycle",
+    "behavior": [
+      "Run web_search on keywords",
+      "Post `proposal` to architect if match",
+      "Never writes to vault"
+    ],
+    "lifecycle": "Always-on, low-activity. Zero tokens until something interesting happens."
+  },
+  "context_windows": {
+    "description": "Known context window sizes per model. Used for dynamic lazy loading.",
+    "detection": "Read from provider config at session start. If unknown, default to 32K.",
+    "profiles": {
+      "small": {
+        "tokens": 8000,
+        "max_contracts": 1,
+        "label": "8K"
+      },
+      "medium": {
+        "tokens": 32000,
+        "max_contracts": 3,
+        "label": "32K"
+      },
+      "large": {
+        "tokens": 128000,
+        "max_contracts": 6,
+        "label": "128K"
+      },
+      "xlarge": {
+        "tokens": 200000,
+        "max_contracts": 9,
+        "label": "200K"
+      },
+      "max": {
+        "tokens": 1000000,
+        "max_contracts": 9,
+        "label": "1M+"
+      }
+    },
+    "per_model": {
+      "gpt-4o": "xlarge",
+      "gpt-4o-mini": "large",
+      "gpt-3.5-turbo": "medium",
+      "claude-sonnet-4": "xlarge",
+      "claude-haiku-4": "large",
+      "gemini-1.5-pro": "max",
+      "gemini-1.5-flash": "max",
+      "grok-3": "large",
+      "grok-4": "xlarge",
+      "ling-3.0-flash-fin-free": "large",
+      "auto": "medium"
+    }
+  },
+  "lazy_loading": {
+    "description": "Dynamic contract loading based on context window.",
+    "priority_order": [
+      "registry.json",
+      "protocol.md",
+      "routing.yaml",
+      "quality-charter.md",
+      "ledger-schema.json",
+      "evolution.md",
+      "README.md",
+      "status.html",
+      "CHANGELOG.md"
+    ],
+    "tier_overrides": {
+      "tier_0": {
+        "max_contracts": 1,
+        "force": [
+          "registry.json"
+        ]
+      },
+      "tier_1": {
+        "max_contracts": 2,
+        "force": [
+          "registry.json",
+          "protocol.md"
+        ]
+      },
+      "tier_2": {
+        "max_contracts": 4,
+        "force": [
+          "registry.json",
+          "protocol.md",
+          "routing.yaml"
+        ]
+      },
+      "tier_3": {
+        "max_contracts": 9,
+        "force": []
+      }
+    },
+    "selection_logic": "Load registry.json first (always). Then load priority_order up to min(window_profile.max_contracts, tier_overrides.max_contracts). tier_overrides.force are always included."
+  },
+  "contracts": {
+    "description": "All system contracts — both core and supplementary.",
+    "core": [
+      "registry.json",
+      "protocol.md",
+      "routing.yaml",
+      "quality-charter.md",
+      "ledger-schema.json",
+      "evolution.md"
+    ],
+    "supplementary": [
+      "constitutional.md",
+      "quality-metrics.md",
+      "escalation-criteria.md",
+      "architect-failover.md",
+      "system-health.md",
+      "model-gateway.md",
+      "model-registry.json",
+      "naming-convention.md"
+    ],
+    "scripts": [
+      "model-gateway.sh",
+      "bootstrap.sh"
+    ]
+  },
+  "version_history": [
+    {
+      "version": "1.0.0",
+      "date": "2026-09-11",
+      "changes": "Initial system layer with 6 contracts"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-09-11",
+      "changes": "Critical fixes: quality metrics, rubric independence, rollback, bounded genesis"
+    },
+    {
+      "version": "1.2.0",
+      "date": "2026-09-11",
+      "changes": "Model Gateway layer: dynamic selection, caching, fallback"
+    },
+    {
+      "version": "1.7.0",
+      "date": "2026-09-11",
+      "changes": "Three-layer naming convention (technical, functional, display)"
+    },
+    {
+      "version": "1.8.0",
+      "date": "2026-09-11",
+      "changes": "Renamed all agents to technical names (orchestrator-agent, qa-agent, etc.)"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+ "timestamp": "2026-09-11T01:13:33.050311+00:00",
+ "checks": {
+ "factual_error_rate": {
+ "value": 0.0,
+ "target": 5,
+ "status": "pass"
+ },
+ "source_verification_rate": {
+ "value": 100.0,
+ "target": 90,
+ "status": "pass"
+ },
+ "human_override_rate": {
+ "value": 3,
+ "target": 20,
+ "status": "pass"
+ },
+ "escalations_per_week": {
+ "value": 2,
+ "target": 3,
+ "status": "pass"
+ },
+ "failover_events": {
+ "value": 1,
+ "target": 0,
+ "status": "fail"
+ }
+ },
+ "overall_status": "needs_improvement",
+ "failed_checks": 1,
+ "version": "1.0"
+}

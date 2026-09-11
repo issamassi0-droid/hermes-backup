@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 backup.py — Create a backup of the Cabinet-Office system.
-Copies all critical files from ~/.hermes to ~/.hermes-backup.
+Copies all essential files from ~/.hermes to ~/.hermes-backup.
 
 Usage:
     python3 backup.py    # create backup
@@ -45,14 +45,15 @@ def get_backup_files():
             if os.path.exists(profile):
                 files.append(f"profiles/{folder}/profile.yaml")
 
-    # Ledger directory
+    # Ledger directory (JSON only)
     ledger_dir = os.path.join(SOURCE_BASE, "system/ledger")
     if os.path.exists(ledger_dir):
         for root, dirs, filenames in os.walk(ledger_dir):
             for f in filenames:
-                full_path = os.path.join(root, f)
-                rel_path = os.path.relpath(full_path, SOURCE_BASE)
-                files.append(rel_path)
+                if f.endswith('.json'):
+                    full_path = os.path.join(root, f)
+                    rel_path = os.path.relpath(full_path, SOURCE_BASE)
+                    files.append(rel_path)
 
     return sorted(files)
 

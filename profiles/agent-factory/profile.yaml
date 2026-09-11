@@ -1,0 +1,14 @@
+description: Create new bots as user like
+description_auto: false
+ui_meta:
+  hermes-bots: null
+  shape: blobatar
+  imageKind: photo
+  title: ''
+  created: 1788871521486
+  pinned: true
+_ui_meta_revisions:
+  hermes-bots: 4
+ui:
+  title: agent-factory
+model: nemotron-3-ultra-free

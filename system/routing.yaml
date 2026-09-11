@@ -1,0 +1,313 @@
+version: 1.7.0
+updated: '2026-09-11'
+tiers:
+  '0':
+    name: Direct
+    when: trivial complexity AND low stakes AND well-known facts AND no tool need
+    pipeline_stages: []
+    agents: []
+    token_budget: 500
+    verification_floor: self-check only
+    temporal_bound: none
+    max_skills_per_agent: 0
+  '1':
+    name: Tool-Augmented
+    when: needs current info OR one lookup OR one calculation
+    pipeline_stages:
+      - research
+      - publish
+    agents:
+      - research-agent-multi
+      - distribution-agent
+    token_budget: 2000
+    verification_floor: self-check only
+    temporal_bound: 'News: <=7d | Tech: <=6m | Evergreen: none'
+    max_skills_per_agent: 2
+  '2':
+    name: Single-Agent
+    when: bounded complexity in one domain (full article, code change, data analysis)
+    pipeline_stages:
+      - research
+      - strategy
+      - draft
+      - verify
+      - publish
+    agents:
+      - research-agent-multi
+      - strategy-agent
+      - drafting-agent
+      - qa-agent
+      - distribution-agent
+    token_budget: 15000
+    verification_floor: single-pass QA against sources
+    temporal_bound: 'Tech: <=6m | Deep: <=12m'
+    max_skills_per_agent: 4
+  '3':
+    name: Cross-Agent
+    when: spans domains OR high/irreversible stakes OR high ambiguity
+    pipeline_stages:
+      - triage
+      - research
+      - video
+      - strategy
+      - draft
+      - verify
+      - publish
+      - analyze
+    agents:
+      - orchestrator-agent
+      - research-agent-multi
+      - research-agent-youtube
+      - strategy-agent
+      - drafting-agent
+      - qa-agent
+      - distribution-agent
+      - analytics-agent
+    token_budget: 50000
+    verification_floor: independent QA (different model family) + human escalation
+    temporal_bound: 'Tech: <=6m | Deep: <=12m | Historical: explicit opt-in'
+    max_skills_per_agent: 6
+escalate:
+  0_to_1: Request needs current info not in training data.
+  1_to_2: Single answer insufficient; requires multi-step synthesis.
+  2_to_3: Evidence gaps OR strategy conflicts OR aggregate confidence < 0.7.
+  3_to_human: Novel topic OR irreversible stakes OR repeated QA disagreement.
+deescalate:
+  2_to_1: Agent discovers the request is simpler than triaged (e.g. answer already in attached doc).
+  3_to_2: Cross-agent span collapses to single agent after triage refinement.
+stakes_floors:
+  trivial:
+    verification: none
+    qa_required: false
+    human_checkpoint: false
+  moderate:
+    verification: self-check + source trace
+    qa_required: false
+    human_checkpoint: false
+  high:
+    verification: independent QA (different model family)
+    qa_required: true
+    human_checkpoint: before publish
+  irreversible:
+    verification: independent QA + explicit human approval
+    qa_required: true
+    human_checkpoint: before any external action
+latent_need_checks:
+  - id: compliance_stakes
+    question: Does the literal question look low-stakes but the context is high-stakes?
+    action: Force tier >= 2 and stakes >= high.
+  - id: downstream_use
+    question: Are there signals like 'to send to client', 'for publication', 'for the deck'?
+    action: Raise output_type to artifact and set stakes >= moderate.
+  - id: ambiguity
+    question: Is the request genuinely ambiguous in a way that would send to a materially different tier or agent?
+    action: Ask exactly ONE clarifying question. Otherwise pick the most reasonable interpretation, state the assumption in the ticket, and proceed.
+model_selection:
+  '0': fast/cheap (e.g. longcat-2.0:free)
+  '1': fast/cheap
+  '2': balanced (e.g. nemotron-3-ultra-free)
+  '3': best available; QA MUST use a different model family than Writer
+budget:
+  writer_token_dominance:
+    tier_2: Writer ~53% of budget (8k/15k)
+    tier_3: Writer+QA ~68% of budget (34k/50k)
+  reserve_rule: Architect always reserves Writer+QA budget first, then fits Research/Strategy around it.
+  hard_stop: 'At 90% budget: pipeline halts, Architect reports, user decides continue/trim.'
+compression:
+  researcher_to_strategist: '{title, url, tier, key_claim, credibility, date} — no raw HTML'
+  strategist_to_writer: '{headings, data_slots, keyword_map, avoid_claims} — no prose'
+  writer_to_editor: draft + citation_map (claim -> source_id)
+  editor_to_writer: '{unsupported_claims[], overstated_claims[], off_brief_claims[], missing_counterarguments[]}'
+  writer_to_publisher: final Markdown only — no reasoning trace
+  analytics_to_researcher: '{success_criteria_met, hypothesis_updates, evidence_gaps_filled, new_angles_validated}'
+scoring_rubric:
+  axes:
+    - id: frequency
+      label: How often does this issue appear?
+      max: 20
+    - id: pain_intensity
+      label: How serious is this issue?
+      max: 20
+    - id: solvability
+      label: Can this be solved or explained?
+      max: 20
+    - id: solution_gap
+      label: Is there a gap in existing solutions?
+      max: 20
+    - id: strategic_fit
+      label: Does this align with our goals?
+      max: 20
+  total_max: 100
+  cutoff: 65
+  decisions:
+    build: score >= 75 AND solvability >= 15
+    write: score >= 65 OR strategic_fit >= 15
+    shelve: score < 65
+human_gate:
+  enabled: true
+  stage: strategy
+  format: proposal
+  delivery: desktop
+  response_timeout_hours: 24
+  on_timeout: escalate_to_human
+group_room_turn_limit: 8
+multi_model:
+  rules:
+    - tier: tier_0
+      model_profile: lightweight
+      rationale: Entry-level triage needs speed, not depth.
+    - tier: tier_1
+      model_profile: standard
+      rationale: Research needs reliability, not deep reasoning.
+    - tier: tier_2
+      model_profile: standard_plus
+      rationale: Strategy, drafting, verification need stronger reasoning.
+    - tier: tier_3
+      model_profile: capable
+      rationale: Full analysis with video, deep research, cross-agent.
+  token_savings_estimate: ~30-40% vs using capable for everything
+self_healing:
+  max_attempts: 1
+  allowed_actions:
+    - output_relocation
+    - format_correction
+    - source_reread
+  forbidden_actions:
+    - change_mission_brief
+    - override_routing_decision
+  logging: Every self-repair logged in ledger with detection + action + result
+  bypass_rules: Self-healing never bypasses the human gate
+refine:
+  trigger: after each session completes
+  cost: minimal LLM call — agent reviews its own output
+  content:
+    - What worked well?
+    - What would I do differently?
+    - Did I stay within my tool allowlist?
+    - Did I respect the token budget?
+scoped_templates:
+  path: /home/massi/.hermes/system/templates/
+  files:
+    - registry.stub.json
+    - protocol.stub.md
+    - quality-charter.stub.md
+  open_source: true
+telegram:
+  enabled: false
+  bot_token_env: TELEGRAM_BOT_TOKEN
+  chat_id_env: TELEGRAM_CHAT_ID
+  delivers:
+    - proposal
+    - escalation
+    - blocker
+  receives:
+    - approve
+    - shelve
+    - modify
+dynamic_context:
+  detection_method: Read from provider config → model name → lookup table
+  fallback: 32K (medium)
+  loading_profiles:
+    small:
+      max_contracts: 1
+      loads:
+        - registry.json
+      estimated_tokens: 2833
+      warning: Minimal system awareness. Tier 0 only.
+    medium:
+      max_contracts: 5
+      loads:
+        - registry.json
+        - protocol.md
+        - routing.yaml
+        - guard-duplicate-serve.md
+        - guard-operational-safety.md
+      estimated_tokens: 7083
+      warning: Partial system awareness. Tier 0-1 recommended.
+    large:
+      max_contracts: 8
+      loads:
+        - registry.json
+        - protocol.md
+        - routing.yaml
+        - guard-duplicate-serve.md
+        - guard-operational-safety.md
+        - quality-charter.md
+        - ledger-schema.json
+        - evolution.md
+      estimated_tokens: 12961
+      warning: Full system awareness. Tier 0-2 recommended.
+    xlarge:
+      max_contracts: 10
+      loads:
+        - registry.json
+        - protocol.md
+        - routing.yaml
+        - guard-duplicate-serve.md
+        - guard-operational-safety.md
+        - quality-charter.md
+        - ledger-schema.json
+        - evolution.md
+        - README.md
+        - status.html
+      estimated_tokens: 14813
+      warning: Full system awareness. All tiers supported.
+    max:
+      max_contracts: 9
+      loads: all
+      estimated_tokens: 15500
+      warning: Full system awareness. All tiers. No constraints.
+  tier_compatibility:
+    small:
+      - tier_0
+    medium:
+      - tier_0
+      - tier_1
+    large:
+      - tier_0
+      - tier_1
+      - tier_2
+    xlarge:
+      - tier_0
+      - tier_1
+      - tier_2
+      - tier_3
+    max:
+      - tier_0
+      - tier_1
+      - tier_2
+      - tier_3
+  auto_downgrade: true
+  downgrade_message: Context window too small for requested tier. Downgrading to {tier}.
+  enforcement:
+    enabled: true
+    check_script: scripts/context-budget.py
+    min_remaining_pct: 10
+    on_overflow: refuse_and_escalate
+    safety_margin_pct: 20
+evidence_enforcement:
+  enabled: true
+  rule: Every factual claim MUST carry one of [V] [M] [U] [H] [X].
+  on_missing_grade: reject_and_rewrite
+  max_rewrite_attempts: 2
+  failure_action: escalate_to_editor_qa
+  validator_script: scripts/output-validator.py
+  factual_error_threshold_pct: 10
+  similarity_threshold: 0.6
+heartbeat:
+  enabled: true
+  script: scripts/architect-heartbeat.py
+  interval_minutes: 5
+  stale_threshold_minutes: 15
+  on_stale: enter_degraded_mode
+naming:
+  convention: Technical names used throughout (see naming-convention.md)
+  mapping:
+    architect: orchestrator-agent
+    omni-researcher: research-agent-multi
+    deep-dive: research-agent-youtube
+    strategist: strategy-agent
+    draft-writer: drafting-agent
+    editor-qa: qa-agent
+    publisher: distribution-agent
+    analytics: analytics-agent

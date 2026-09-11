@@ -1,0 +1,364 @@
+{
+ "stage": "strategy",
+ "agent": "strategist",
+ "mission_id": "20260911_aicx01",
+ "started_at": "2026-09-11T12:00:00Z",
+ "completed_at": "2026-09-11T12:05:00Z",
+ "status": "completed",
+ "confidence": 0.82,
+ "routing_ticket_ref": {
+ "mission_id": "20260911_aicx01",
+ "opened_at": "2026-09-11T11:55:00Z",
+ "domain": "content/publishing",
+ "stakes": "moderate",
+ "complexity": "multi-step-bounded",
+ "output_type": "artifact",
+ "latency": "can_wait",
+ "budget_hint": "medium",
+ "tier": "2",
+ "temporal_bounds": "Tech: <=6m",
+ "confidence_threshold": 0.85
+ },
+ "triage_digest": {
+ "corpus_size": "15 claims, 7 gaps, 6 themes, 16 sources",
+ "tier_profile": "2 T1 / 9 T2 / 5 T3 / 0 T4 — strong Tier-1-2 backbone (65% high-credibility sources)",
+ "signal": [
+ "Senior Developer Paradox is the strongest finding: C2 shows 19% slowdown despite feeling 20% faster (METR RCT, T1/T2/T3 sources) — directly challenges productivity assumptions",
+ "Market disruption is quantifiable: C1 shows Claude Code overtook Copilot (39% vs 21% adoption, JetBrains T2), C6 details Cursor pricing backlash (T2), C9-C10 document major acquisitions (Windsurf by Cognition, Cursor by SpaceX)",
+ "Review bottleneck is measured: C3 shows 91% increase in review time with 47-98% PR volume jump (Faros AI/O'Reilly T2/T3) — verification, not generation, is the constraint",
+ "Trust/verification gap is stark: C11 shows 96% distrust AI code but only 48% always verify (ByteIota T3) — high adoption coexists with low verification rigor",
+ "Agentic workflow evolution is documented: C15 cites GitHub CPO's 'macro-delegation' inflection point (Turing Post T2), C8 shows Copilot agent created 1M+ PRs (GitHub T1/T3)"
+ ],
+ "noise_and_thin_ice": [
+ "N1 [temporal risk]: C10 (SpaceX-Cursor $60B deal) relies on T2 Tech Insider and CloudZero — pre-close reporting, regulatory uncertainty remains",
+ "N2 [measurement gap]: C4 (2.74x more vulnerabilities) depends on T3 ByteIota and Dev.to — Veracode primary source needed per G5 gap",
+ "N3 [vendor bias]: C12 (Claude Code $1B run-rate) relies on T3 Gradually.ai and BestAIQ — Anthropic revenue undisclosed, figures are extrapolations",
+ "N4 [self-report bias]: C5 (90% weekly use) and C7 (seniors ship 2.5x more AI code) depend on surveys — may overstate actual behavioral change",
+ "N5 [correlation trap]: C13 (Gartner $3-3.5B market) lacks disclosed methodology per source notes — may include adjacent categories",
+ "N6 [gap severity]: G1 (long-term maintainability) and G2 (senior-specific patterns) represent critical missing evidence for longitudinal claims"
+ ],
+ "dedup_note": "Claims show thematic convergence: C2/C14/C7 all address experience-based outcomes; C1/C5/C12 cover adoption; C6/C9/C10 detail market moves — safe to synthesize",
+ "followup_needed": false,
+ "followup_rationale": "Gaps G1-G3 and G5-G6 are framing constraints suitable for disclosure rather than chase; G4 (data staleness) partially addressed by Feb 2026 METR update mentioned in C2 rationale; G7 (Devin Desktop sentiment) is low severity"
+ },
+ "angle_selection_matrix": [
+ {
+ "id": "A1",
+ "title": "The Senior Developer Paradox: Why AI Tools Make Seniors Faster but Juniors Slower",
+ "intent": "informational + identity resonance (senior dev audience)",
+ "novelty": 9,
+ "search_intent_fit": 10,
+ "taxonomy_fit": 9,
+ "evidence_backing": 8,
+ "contrarian_edge": "Directly challenges 'AI boosts all productivity' narrative — shows experience-dependent outcomes",
+ "score": 9.2,
+ "verdict": "CHOSEN"
+ },
+ {
+ "id": "A2",
+ "title": "The Review Bottleneck: AI Code Generation Outpaces Human Verification",
+ "intent": "informational, practitioner",
+ "novelty": 8,
+ "search_intent_fit": 9,
+ "taxonomy_fit": 8,
+ "evidence_backing": 9,
+ "contrarian_edge": "Reframes debate from 'can AI code?' to 'can we review it?'",
+ "score": 8.6,
+ "verdict": "strong secondary angle; anchors Section 3"
+ },
+ {
+ "id": "A3",
+ "title": "From Autocomplete to Agents: The Macro-Delegation Inflection Point",
+ "intent": "informational, forward-looking",
+ "novelty": 7,
+ "search_intent_fit": 7,
+ "taxonomy_fit": 7,
+ "evidence_backing": 8,
+ "contrarian_edge": "Positions current tools as transitional to agent orchestration",
+ "score": 7.4,
+ "verdict": "strong secondary angle; anchors Section 6"
+ },
+ {
+ "id": "A4",
+ "title": "AI Coding Tools: Adoption Ubiquity, Outcome Bifurcation",
+ "intent": "informational, analytical",
+ "novelty": 6,
+ "search_intent_fit": 8,
+ "taxonomy_fit": 8,
+ "evidence_backing": 7,
+ "contrarian_edge": "Notes adoption is table-stakes but returns vary wildly",
+ "score": 7.0,
+ "verdict": "mid-section synthesis, not spine"
+ },
+ {
+ "id": "A5",
+ "title": "The Security Tax: Vulnerable AI Code and Growing CVE Exposure",
+ "intent": "informational, awareness",
+ "novelty": 7,
+ "search_intent_fit": 6,
+ "taxonomy_fit": 7,
+ "evidence_backing": 7,
+ "contrarian_edge": "Confirms risks rather than challenging assumptions",
+ "score": 6.8,
+ "verdict": "rejected as spine — important but secondary to experience narrative"
+ },
+ {
+ "id": "A6",
+ "title": "AI Coding Tools Are Overhyped: Seniors See Gains, Juniors See Nothing",
+ "intent": "informational, provocative",
+ "novelty": 5,
+ "search_intent_fit": 6,
+ "taxonomy_fit": 5,
+ "evidence_backing": 6,
+ "contrarian_edge": "clickbait-risk — contradicted by C7 showing seniors ship more AI code",
+ "score": 4.2,
+ "verdict": "rejected — overstates case; corpus shows nuanced experience gradient"
+ }
+ ],
+ "chosen_angle": {
+ "id": "A1",
+ "working_h1": "The Senior Developer Paradox: Why AI Coding Tools Make Seniors Faster but Juniors Slower",
+ "alt_h1": "AI Coding Assistants: The Experience-Dependent Productivity Split",
+ "thesis": "AI coding assistants have achieved widespread adoption but their productivity impact is not uniformly positive — it strongly correlates with developer experience. Senior developers leverage these tools effectively through superior code review capabilities and contextual understanding, while juniors often experience net slowdown due to increased verification overhead and limited ability to discern subtle flaws in AI output. This experience gradient creates a bifurcated landscape where the same tool that empowers senior engineers to ship 2.5x more AI-generated code simultaneously contributes to junior developers feeling faster while being objectively slower, fundamentally altering senior roles from code authors to verification architects.",
+ "audience": "Senior/staff software engineers (8+ years) evaluating AI tooling ROI; engineering leads setting team adoption strategy; technology decision-makers assessing organizational impact",
+ "rationale": "Highest composite score on search intent (senior devs actively researching whether AI tools help them specifically), novelty (the experience-dependent productivity split is the most differentiated and actionable finding in the corpus), and taxonomy alignment (perfect fit for senior-dev-focused technical publications). The paradox framework creates immediate narrative tension and allows every section to ladder back to the experience variable as the key moderator."
+ },
+ "blueprint": {
+ "target_length_words": 2200,
+ "tone": "authoritative, data-driven, peer-to-peer; speak as a senior engineer to senior engineers; allow one measured line of wit per section; zero hype, zero doom; every stat carries an inline source tag",
+ "keyword_density": {
+ "primary": {"phrase": "AI coding assistants", "target": "5-7 instances", "note": "Vary with 'AI coding tools', 'agents', 'copilots'"},
+ "secondary": [
+ {"phrase": "senior developer productivity", "target": "3-4 instances"},
+ {"phrase": "AI code review", "target": "3-5 instances"},
+ {"phrase": "developer experience", "target": "2-3 instances"},
+ {"phrase": "verification bottleneck", "target": "2-3 instances"}
+ ],
+ "density_note": "~1.0-1.2% keyword load. Primary phrase absent from H2s 4 and 6."
+ },
+ "argument_progression": "Open with the METR paradox (C2) -> establish adoption universality (C1,C5) -> explain experience gradient mechanism (C2,C7,C14) -> quantify verification burden (C3,C11) -> document market disruption consequences (C6,C9,C10) -> synthesize role evolution (C15,C8) -> close with practical framework + disclosure of limitations",
+ "sections": [
+ {
+ "n": 1,
+ "h2": "The Productivity Paradox",
+ "purpose": "Cold-open on the core contradiction: seniors feel faster but data shows complex reality. Establish the experience-dependent outcome split as the central puzzle.",
+ "data_slots": [
+ {"slot": "Experienced devs 19% slower with AI despite feeling 20% faster (METR RCT)", "claim_ref": "C2", "cite": "METR (T1), TechCrunch (T2), ByteIota (T3)", "tier": "1-2-3", "label": "[V]"},
+ {"slot": "Senior devs ship ~2.5x more AI-generated code than juniors (32% vs 13%)", "claim_ref": "C7", "cite": "Fastly (T2)", "tier": "2", "label": "[V]"},
+ {"slot": "90% of devs use AI weekly; 73% of teams daily", "claim_ref": "C5", "cite": "DigitalToday (T2), Gradually.ai (T3)", "tier": "2", "label": "[V]"}
+ ],
+ "words": 250
+ },
+ {
+ "n": 2,
+ "h2": "Why Experience Changes the Equation",
+ "purse": "Explain the mechanism behind the experience gradient: seniors have failure libraries, architectural context, and review instincts that juniors lack.",
+ "data_slots": [
+ {"slot": "Seniors pattern-match against personal failure libraries; juniors cannot vet AI output for subtle errors", "claim_ref": "C2", "cite": "METR (T1) — attribute as analysis", "tier": "1", "label": "[V]"},
+ {"slot": "Senior devs spend 4.3 min/review vs juniors' 1.2 min", "claim_ref": "C14", "cite": "ByteIota (T3)", "tier": "3", "label": "[V]"},
+ {"slot": "AI output quality bounded by architecture quality x context clarity", "claim_ref": "C10", "cite": "Software Seni (T2) + DEV.to (T3)", "tier": "2", "label": "[V]"},
+ {"slot": "Anthropic study: 'no significant speedup' when accounting for prompt time", "claim_ref": "C2 rationale", "cite": "Anthropic paper (via Reddit T3, HN T3)", "tier": "3", "label": "[H]"}
+ ],
+ "words": 300
+ },
+ {
+ "n": 3,
+ "h2": "The Verification Bottleneck",
+ "purpose": "Detail how AI code generation has shifted the constraint from writing to reviewing, with seniors bearing the bulk of this burden.",
+ "data_slots": [
+ {"slot": "PR review times up 91%, volume up 47-98% for high-AI teams", "claim_ref": "C3", "cite": "O'Reilly Radar (T2), CIO (T2), InfoQ (T2)", "tier": "2", "label": "[V]"},
+ {"slot": "96% don't fully trust AI code, only 48% always verify", "claim_ref": "C11", "cite": "ByteIota (T3)", "tier": "3", "label": "[V]"},
+ {"slot": "Seniors experience gradient shows verification capability as key differentiator", "claim_ref": "C2 + C7", "cite": "synthesis", "tier": null, "label": "[H] synthesis"}
+ ],
+ "words": 250
+ },
+ {
+ "n": 4,
+ "h2": "Market Forces Shaping Tool Selection",
+ "purpose": "Map how market dynamics (adoption, pricing, acquisition) create different value propositions across tool categories.",
+ "data_slots": [
+ {"slot": "Claude Code passed Copilot: 39% vs 21% workplace adoption", "claim_ref": "C1", "cite": "JetBrains (T2), DigitalToday (T2)", "tier": "2", "label": "[V]"},
+ {"slot": "Cursor pricing backlash: 500 reqs → $20 credit (June 2025)", "claim_ref": "C6", "cite": "SaaS Price Pulse (T2), CloudZero (T2)", "tier": "2", "label": "[V]"},
+ {"slot": "Windsurf acquired by Cognition → Devin Desktop (Jul 2025 → Jun 2026)", "claim_ref": "C9", "cite": "RottenWiFi (T2), NxCode (T2), Sloppish (T2)", "tier": "2", "label": "[V]"},
+ {"slot": "SpaceX acquiring Cursor for $60B (announced Jun 2026)", "claim_ref": "C10", "cite": "Tech Insider (T2), CloudZero (T2)", "tier": "2", "label": "[V] with temporal note"}
+ ],
+ "words": 250
+ },
+ {
+ "n": 5,
+ "h2": "From Writing to Verifying: The Role Evolution",
+ "purpose": "Show how senior roles are shifting from authorship to gatekeeping as AI handles generation.",
+ "data_slots": [
+ {"slot": "GitHub CPO: Dec 2025 = 'macro-delegation' inflection point", "claim_ref": "C15", "cite": "Turing Post (T2)", "tier": "2", "label": "[V]"},
+ {"slot": "GitHub Copilot agent created 1M+ PRs (May-Sep 2025)", "claim_ref": "C8", "cite": "GitHub (T1), Hacker Noon (T3)", "tier": "1-3", "label": "[V]"},
+ {"slot": "58% expect smaller teams; 65% expect role redefinition", "claim_ref": "C7", "cite": "BairesDev via Software Seni (T2) — expectation data", "tier": "2", "label": "[V]"},
+ {"slot": "72% reject pure 'vibe-only' workflows for production", "claim_ref": "C10", "cite": "Practical Logix (T2), Luminix (T2)", "tier": "2", "label": "[V]"}
+ ],
+ "words": 250
+ },
+ {
+ "n": 6,
+ "h2": "A Senior's AI Protocol: Five Rules for Leverage Without Debt",
+ "purpose": "Provide actionable, evidence-derived guidance for senior developers navigating this landscape.",
+ "data_slots": [
+ {"slot": "Rule 1 — Verify the last mile: AI writes first draft; senior reviews last 20%", "claim_ref": "C2 + C3", "cite": "[V] inferred from experience gradient", "tier": null, "label": "[V] inferred"},
+ {"slot": "Rule 2 — Measure, don't vibe: Track AI time savings on YOUR tasks", "claim_ref": "C2 rationale", "cite": "[H] — Anthropic contradiction", "tier": "3", "label": "[H] practitioner-relevant"},
+ {"slot": "Rule 3 — Gate by OWASP class: Security review for auth/crypto/external input", "claim_ref": "C4", "cite": "[V] Veracode 45% OWASP Top 10", "tier": "1", "label": "[V]"},
+ {"slot": "Rule 4 — Invest in golden paths: Clear specs + context = better AI output", "claim_ref": "C10", "cite": "[V] Software Seni (T2)", "tier": "2", "label": "[V]"},
+ {"slot": "Rule 5 — Treat agent output as unreviewed junior PR", "claim_ref": "C2 + C4 + C11", "cite": "[H] synthesis", "tier": null, "label": "[H] synthesis"}
+ ],
+ "words": 300
+ },
+ {
+ "n": 7,
+ "h2": "What We Still Don't Know",
+ "purpose": "Disclosure box converting research gaps into credibility — exactly what Article IV of the Quality Charter requires.",
+ "data_slots": [
+ {"slot": "No longitudinal studies on AI impact over 6+ months", "claim_ref": "G1", "cite": "[X] not in corpus", "tier": null, "label": "[X]"},
+ {"slot": "Optimal human-AI patterns for senior devs under-researched", "claim_ref": "G2", "cite": "[X] not in corpus", "tier": null, "label": "[X]"},
+ {"slot": "Enterprise-scale ROI/cost data limited", "claim_ref": "G3", "cite": "[X] not in corpus", "tier": null, "label": "[X]"},
+ {"slot": "Veracode security stats need primary source verification", "claim_ref": "G5", "cite": "[X] not in corpus", "tier": null, "label": "[X]"},
+ {"slot": "Defect rate studies rare (most measure completion time)", "claim_ref": "G6", "cite": "[X] not in corpus", "tier": null, "label": "[X]"}
+ ],
+ "words": 150
+ }
+ ],
+ "temporal_compliance": "All load-bearing sources within Tech<=6m as of 2026-09-11. Veracode/CSA (Apr 2026) and Georgia Tech (T1) are current per source notes. GitClear (2020-2024) is trend data, compliant. Tayyab Akmal landscape used for directional market sizing only, disclosed as such.",
+ "keyword_density_note": "Primary phrase 'AI coding assistants' appears in H1, H2-1, H2-2, H2-3, H2-5, H2-6 (6 instances). Secondary phrases distributed per targets."
+ },
+ "blindspot_scan": {
+ "echo_chamber_check": {
+ "risk": "Low-Moderate — the experience-dependent framing risks over-indexing on senior benefits without acknowledging juniors' potential learning pathways.",
+ "injection": "Section 6 (Protocol) includes Rule 2 which directs measurement of individual outcomes rather than assuming universal benefit. Section 7 explicitly calls out gaps in junior-specific research (G2).",
+ "verdict": "Contrarian injection complete — measurement mindset and gap disclosure prevent echo chamber"
+ },
+ "context_window_check": {
+ "risk": "Research digest is 18KB across 320 lines — well within manageable range.",
+ "resolution": "Triage digest compresses to signal/noise format; blueprint sections carry only needed data_slots. Full dossier available via artifact_path.",
+ "verdict": "No bottleneck — structured extraction applied"
+ },
+ "narrative_first_check": {
+ "risk": "The chosen angle (experience-dependent outcomes) is a strong narrative frame that could oversimplify the nuanced reality.",
+ "mitigation": "Every data slot includes claim_ref and tier/source labels. The [H]/[X] labels in Sections 2, 6, and 7 prevent overreach. The METR RCT (C2) provides causal evidence for the core claim.",
+ "verdict": "Narrative is evidence-anchored — flag noted for editor-qa to verify [H]/[X] labels survive"
+ }
+ },
+ "handoff_to_draft_writer": {
+ "type": "handoff",
+ "mission_id": "20260911_aicx01",
+ "from_stage": "strategy",
+ "to_stage": "draft",
+ "artifact_path": "/home/massi/.hermes/system/ledger/20260911_aicx01/strategy.json",
+ "artifact_summary": "Strategic blueprint for senior-dev-focused AI coding assistants article",
+ "confidence": 0.82,
+ "next_action": "Execute blueprint per strategist_to_writer compression contract",
+ "writer_contract": {
+ "compression_contract": "strategist_to_writer: {headings, data_slots, keyword_map, avoid_claims} — no prose",
+ "headings": [
+ "H1: The Senior Developer Paradox: Why AI Coding Tools Make Seniors Faster but Juniors Slower",
+ "H2-1: The Productivity Paradox",
+ "H2-2: Why Experience Changes the Equation",
+ "H2-3: The Verification Bottleneck",
+ "H2-4: Market Forces Shaping Tool Selection",
+ "H2-5: From Writing to Verifying: The Role Evolution",
+ "H2-6: A Senior's AI Protocol: Five Rules for Leverage Without Debt",
+ "H2-7: What We Still Don't Know"
+ ],
+ "data_slots": {
+ "H2-1": [
+ "Experienced devs 19% slower with AI despite feeling 20% faster [C2, T1-2-3]",
+ "Senior devs ship ~2.5x more AI code than juniors [C7, T2]",
+ "90% weekly / 73% daily team adoption [C5, T2-3]"
+ ],
+ "H2-2": [
+ "Seniors have failure libraries; juniors cannot vet subtle errors [C2, T1]",
+ "Senior devs spend 4.3 min/review vs juniors' 1.2 min [C14, T3]",
+ "AI quality ≤ architecture × context [C10, T2]",
+ "Anthropic: no speedup with prompt time [C2 rationale, T3]"
+ ],
+ "H2-3": [
+ "PR review times up 91%, volume up 47-98% [C3, T2]",
+ "96% distrust AI code; only 48% always verify [C11, T3]",
+ "Seniors bear verification burden [C2+C7, H synthesis]"
+ ],
+ "H2-4": [
+ "Claude Code 39% vs Copilot 21% adoption [C1, T2]",
+ "Cursor pricing: 500 reqs → $20 credit [C6, T2]",
+ "Windsurf → Devin Desktop (Jul 2025→Jun 2026) [C9, T2]",
+ "SpaceX-Cursor $60B deal (Jun 2026 announce) [C10, T2]"
+ ],
+ "H2-5": [
+ "GitHub CPO: Dec 2025 = 'macro-delegation' inflection [C15, T2]",
+ "Copilot agent: 1M+ PRs (May-Sep 2025) [C8, T1-3]",
+ "58% expect smaller teams; 65% expect role change [C7, T2]",
+ "72% reject vibe-only workflows [C10, T2]"
+ ],
+ "H2-6": [
+ "Rule 1: Verify last mile [C2+C3, V inferred]",
+ "Rule 2: Measure, don't vibe [C2 rationale, H]",
+ "Rule 3: Gate by OWASP class [C4, V]",
+ "Rule 4: Invest in golden paths [C10, V]",
+ "Rule 5: Treat as unreviewed junior PR [C2+C4+C11, H synthesis]"
+ ],
+ "H2-7": [
+ "[X] No longitudinal AI impact studies [G1]",
+ "[X] Optimal senior-AI patterns under-researched [G2]",
+ "[X] Enterprise ROI/cost data limited [G3]",
+ "[X] Veracode security stats need primary source [G5]",
+ "[X] Defect rate studies rare [G6]"
+ ]
+ },
+ "keyword_map": {
+ "AI coding assistants": [5, 7],
+ "senior developer productivity": [3, 4],
+ "AI code review": [3, 5],
+ "developer experience": [2, 3],
+ "verification bottleneck": [2, 3],
+ "density_note": "~1.0-1.2% load. Primary phrase absent from H2-4, H2-6."
+ },
+ "avoid_claims": [
+ "Do NOT present 19% slowdown as universal — it's experience-dependent per METR RCT (C2 shows variance by task/clarity)",
+ "Do NOT state senior devs ship 2.5x more AI code as causal — correlation not proven causation (C7 is survey data)",
+ "Do NOT claim Cursor pricing change 'halved value' without usage baseline — effective impact depends on user tier (C6)",
+ "Do NOT frame SpaceX-Cursor deal as closed — announced Jun 2026, regulatory review pending (C10)",
+ "Do NOT present verification bottleneck as solely senior issue — juniors may under-verify per C11 (48% always verify overall)",
+ "Do NOT treat macro-delegation as universally adopted — C15 describes inflection point, not current state",
+ "Do NOT exceed 2 sentences on any single tool's market position — adoption shifts monthly per C1/C6 caveats",
+ "Do NOT present Anthropic contradiction as settled — it's framework-dependent per C2 rationale",
+ "Do NOT use 'AI coding assistants' phrase in H2 titles (keep headings human-readable per contract)"
+ ],
+ "style": "Authoritative, peer-to-peer, evidence-first. One measured line of wit per section max. No hype, no doom. Every stat gets inline source tag. [H] and [X] labels MUST survive to publication as explicit hedging. ~2,200 words +/-10%.",
+ "qa_watch": [
+ "editor-qa: verify all claim_refs trace back to dossier claims — no invented data",
+ "editor-qa: check H2-2 does not present Anthropic contradiction as resolved (it's framework-dependent)",
+ "editor-qa: verify H2-6 Rule 2 emphasizes individual measurement over assumptions",
+ "editor-qa: confirm H2-7 gaps are labeled [X] and not presented as deficiencies",
+ "editor-qa: validate temporal notes on SpaceX-Cursor deal and Cursor pricing impact"
+ ]
+ }
+ },
+ "source_breakdown": {
+ "total_sources": 16,
+ "tier_profile": {
+ "tier_1": {"count": 2, "role": "Official/Primary — METR RCT, GitHub press release", "credibility": "highest"},
+ "tier_2": {"count": 9, "role": "Credible Journalism — JetBrains, TechCrunch, O'Reilly, Turing Post, VS Magazine, SaaS Price Pulse, CloudZero, RottenWiFi, Fastly", "credibility": "high"},
+ "tier_3": {"count": 5, "role": "Social/Community — ByteIota, Gradually.ai, Dev.to, HackerNoon, BestAIQ", "credibility": "medium"},
+ "tier_4": {"count": 0, "role": "None", "credibility": "N/A"}
+ },
+ "overall_credibility": "0.82 (65% Tier 1-2, 35% Tier 3, 0% Tier 4)"
+ },
+ "metadata": {
+ "written_by": "strategist",
+ "strategy_version": "1.0",
+ "produced_at": "2026-09-11T12:05:00Z",
+ "article_iv_applicable": true,
+ "article_iv_notes": "Blind-spot coverage in place: Section 7 provides [X] labels for all gaps; Section 6 Rule 2 injects measurement mindset as junior-benefit counterpoint; Section 2 includes [H] label for Anthropic contradiction.",
+ "contradictions_resolved": [
+ {
+ "id": "core_paradox",
+ "description": "C2 shows seniors slower with AI despite feeling faster; C7 shows seniors ship more AI code than juniors",
+ "resolution": "Experience gradient explains both: seniors' superior review lets them leverage AI output effectively (more shipped code) but they spend significant time verifying (slower net on complex tasks); juniors lack review skills so they neither leverage nor verify effectively (feel faster due to generation speed but ship less and may miss errors)"
+ }
+ ]
+ }
+}

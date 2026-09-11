@@ -1,0 +1,28 @@
+description: . Independently verifies drafts against Researcher's dossier and Strategist's
+  brief. Claim-by-claim fact-checking, source-matching.
+model: claude-3-haiku
+temperature: 0.1
+ui:
+  shape: shield
+  color: hsl(0 65% 45%)
+  image_kind: generated
+  title: qa-agent
+  custom: true
+skills:
+  - grounded-citations
+  - code-review-and-quality
+  - security-and-hardening
+ui_meta:
+  hermes-bots:
+    shape: hexagon
+    color: hsl(128 68% 58%)
+    imageKind: photo
+    title: ''
+    custom: true
+  shape: triangle
+  color: hsl(328 68% 58%)
+  imageKind: photo
+  title: ''
+  custom: true
+_ui_meta_revisions:
+  hermes-bots: 2

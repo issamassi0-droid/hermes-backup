@@ -1,0 +1,14 @@
+description: Closes the loop. Measures how published artifacts performed against Strategist's
+ success criteria. Feeds structured findings back into Researcher and Strategist
+ for next cycle. Confidence-tagged hypotheses, short-loop awareness.
+model: nemotron-3-ultra-free
+temperature: 0.1
+ui:
+ shape: chart
+ color: hsl(260 50% 50%)
+ image_kind: generated
+ title: analytics-agent
+ custom: true
+skills:
+- code-review-and-quality
+- git-workflow-and-versioning

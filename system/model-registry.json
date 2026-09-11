@@ -1,0 +1,45 @@
+{
+ "$schema": "https://hermes.dev/schemas/model-registry.v1.json",
+ "version": "1.0",
+ "description": "User-configured model registry. The gateway reads this at session start.",
+ "updated": "2026-09-11T00:00:00+01:00",
+ "models": [
+ {
+ "id": "ling-3.0-flash-fin-free",
+ "provider": "opencode-free",
+ "model_id": "ling-3.0-flash-fin-free",
+ "params": "unknown",
+ "context_window": 128000,
+ "cost_per_1m_tokens": {"input": 0, "output": 0},
+ "tier": "standard_plus",
+ "best_for": ["research", "strategy", "drafting", "verification"],
+ "speed": "fast",
+ "enabled": true,
+ "is_default": true
+ },
+ {
+ "id": "meituan-longcat-2.0-free",
+ "provider": "nous",
+ "model_id": "meituan/longcat-2.0:free",
+ "params": "unknown",
+ "context_window": 32000,
+ "cost_per_1m_tokens": {"input": 0, "output": 0},
+ "tier": "standard",
+ "best_for": ["research", "classification"],
+ "speed": "fast",
+ "enabled": true,
+ "is_default": false
+ }
+ ],
+ "settings": {
+ "fallback_chain": ["ling-3.0-flash-fin-free", "meituan-longcat-2.0-free", "human"],
+ "daily_budget_usd": 0,
+ "weekly_budget_usd": 0,
+ "alert_threshold_pct": 80,
+ "cache_enabled": true,
+ "cache_ttl_seconds": 3600,
+ "cache_max_entries": 1000,
+ "learning_enabled": true,
+ "track_quality_per_model": true
+ }
+}

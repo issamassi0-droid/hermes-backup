@@ -1,0 +1,16 @@
+description: omarchy linux — it helps solving issues and improving system
+description_auto: false
+ui_meta:
+  hermes-bots: null
+  shape: blobatar
+  imageKind: photo
+  title: Omarchy
+  created: 1788869258374
+  color: hsl(237 68% 58%)
+  custom: true
+  pinned: true
+_ui_meta_revisions:
+  hermes-bots: 4
+ui:
+  title: system-operator
+model: nemotron-3-ultra-free

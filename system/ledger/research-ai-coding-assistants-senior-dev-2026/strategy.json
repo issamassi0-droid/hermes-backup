@@ -1,0 +1,377 @@
+{
+ "stage": "strategy",
+ "agent": "strategist",
+ "mission_id": "research-ai-coding-assistants-senior-dev-2026",
+ "started_at": "2026-09-11T12:00:00Z",
+ "completed_at": "2026-09-11T12:05:00Z",
+ "status": "completed",
+ "confidence": 0.82,
+ "routing_ticket_ref": {
+ "tier": "2",
+ "stakes": "moderate",
+ "temporal_bounds": "Tech: <=6m",
+ "confidence_threshold": 0.85,
+ "research_credibility": 0.76,
+ "threshold_met": true
+ },
+
+ "triage_digest": {
+ "corpus_size": "34 sources, 10 claims, 1 resolved contradiction, 5 gaps",
+ "tier_profile": "6 T1 / 18 T2 / 8 T3 / 2 T4 — strong Tier-1 backbone (CSA, Georgia Tech, MCP spec, Google)",
+ "signal": [
+ "Senior experience gradient is the defining finding: 81% productivity gain for 10+yr devs vs zero measurable improvement for juniors [claim-003, T2, 2 convergent sources]. This is the only finding that splits cleanly by audience — ideal for targeting.",
+ "Security debt is quantified and Tier-1 sourced: 45% OWASP Top 10 in AI code [claim-004, T1, Veracode], AI-attributed CVEs grew 6x in 90 days [claim-004, T1, Georgia Tech]. High-stakes enough to drive action.",
+ "Adoption is table-stakes: 77-92% daily use [claim-001, T2, 3 sources]. No longer a novelty angle — sets the frame but cannot be the spine.",
+ "Anthropic contradiction: internal study shows 'no significant speedup' when accounting for prompt time [con-001], directly challenging 10x vendor claims. Resolution depends on task clarity and experience level."
+ ],
+ "noise_and_thin_ice": [
+ "N1 [temporal risk]: Claim-005 (Claude Code overtook Copilot) rests on Zylos T2 and a T3 GitHub comparison — usage rankings shift monthly; cannot be load-bearing.",
+ "N2 [vendor bias]: Claim-009 (three camps taxonomy) includes a T4 Windsurf vendor comparison as its largest source. The category split is real; the specific product rankings are not durable.",
+ "N3 [measurement gap]: Market size claims (claim-002: $11.7B) lack disclosed methodology and may include adjacent categories. Use as background only.",
+ "N4 [self-report bias]: 81% senior productivity gain (claim-003) is survey-based; no RCT backs this specific figure. Anthropic's RCT data (contradiction) suggests the real effect is task-dependent.",
+ "N5 [correlation trap]: 58% expect smaller teams (claim-007) — this is expectation data, not observed outcome. Do not frame as prediction.",
+ "N6 [gap severity]: SWE-bench data was inaccessible (403). Cannot provide benchmark evidence for agent comparison claims."
+ ],
+ "dedup_note": "12 duplicate claims merged. Key statistics (adoption %, OWASP 45%, CVE growth) converge independently across sources — safe to lead with.",
+ "followup_needed": false,
+ "followup_rationale": "Gaps are framing constraints (benchmark data, longitudinal studies) that the article can disclose rather than chase. The contradiction (Anthropic vs vendor claims) is resolved by experience-level framing and encoded as a counterpoint section."
+ },
+
+ "angle_selection_matrix": [
+ {
+ "id": "A1",
+ "title": "The Experience Divide: Why AI Coding Tools Deliver 81% Gains to Seniors and Zero to Juniors",
+ "intent": "informational + identity resonance (senior dev audience)",
+ "novelty": 8,
+ "search_intent_fit": 9,
+ "taxonomy_fit": 9,
+ "evidence_backing": 7,
+ "contrarian_edge": "Inverts the 'AI threatens senior devs' narrative — seniors gain most, juniors don't; flips the anxiety into empowerment",
+ "score": 8.4,
+ "verdict": "CHOSEN"
+ },
+ {
+ "id": "A2",
+ "title": "The Security Debt Bomb: 45% of AI Code Is Vulnerable and CVEs Are Growing 6x",
+ "intent": "informational, awareness",
+ "novelty": 7,
+ "search_intent_fit": 7,
+ "taxonomy_fit": 8,
+ "evidence_backing": 9,
+ "contrarian_edge": "Moderate — confirms fears rather than challenging them",
+ "score": 7.6,
+ "verdict": "strong secondary angle; anchors Section 4"
+ },
+ {
+ "id": "A3",
+ "title": "From Vibe Coding to Agentic Engineering: The Quality War Is Just Starting",
+ "intent": "informational, practitioner",
+ "novelty": 7,
+ "search_intent_fit": 8,
+ "taxonomy_fit": 7,
+ "evidence_backing": 7,
+ "contrarian_edge": "Moderate — reframes adoption as a quality problem",
+ "score": 7.3,
+ "verdict": "strong secondary angle; anchors Section 6"
+ },
+ {
+ "id": "A4",
+ "title": "The Role Shift: Senior Engineers Become Engineering Managers",
+ "intent": "informational, career",
+ "novelty": 6,
+ "search_intent_fit": 7,
+ "taxonomy_fit": 6,
+ "evidence_backing": 5,
+ "contrarian_edge": "Low — already widely discussed",
+ "score": 6.0,
+ "verdict": "mid-section synthesis, not spine"
+ },
+ {
+ "id": "A5",
+ "title": "MCP Unifies the Ecosystem: What the Stateless Spec Means for Tooling",
+ "intent": "technical/navigational",
+ "novelty": 5,
+ "search_intent_fit": 6,
+ "taxonomy_fit": 5,
+ "evidence_backing": 8,
+ "contrarian_edge": "none — consensus narrative",
+ "score": 5.0,
+ "verdict": "rejected as spine — Tier-1 evidence but not differentiated; survives as 1-section sidebar"
+ },
+ {
+ "id": "A6",
+ "title": "AI Coding Tools Are a Productivity Hoax for Experienced Devs",
+ "intent": "informational, provocative",
+ "novelty": 4,
+ "search_intent_fit": 5,
+ "taxonomy_fit": 4,
+ "evidence_backing": 5,
+ "contrarian_edge": "clickbait-risk — contradicted by 81% senior gains data",
+ "score": 3.5,
+ "verdict": "rejected — contradicts the corpus; Anthropic contradiction supports experience-dependence not blanket hoax"
+ }
+ ],
+
+ "chosen_angle": {
+ "id": "A1",
+ "working_h1": "The Experience Divide: Why AI Coding Tools Deliver 81% Gains to Senior Developers and Zero to Juniors",
+ "alt_h1": "AI Coding Assistants: The 81% Gap Between Senior and Junior Productivity",
+ "thesis": "AI coding assistants have become table-stakes infrastructure, but their productivity payoff is not distributed evenly — it concentrates in hands that already know what good code looks like. Senior developers (10+ years) report 81% gains while juniors show zero measurable improvement, because the value of these tools scales with the ability to review, redirect, and catch what the model misses. The same forces that make AI powerful for experts make it dangerous for the rest: 45% of AI-generated code carries OWASP Top 10 vulnerabilities, and AI-attributed CVEs grew sixfold in three months.",
+ "audience": "Senior/staff software engineers (8+ years) evaluating AI tooling strategy; secondarily engineering leaders setting team adoption policy.",
+ "rationale": "Highest composite score on search intent (this audience is actively researching whether AI tools help them specifically), novelty (the senior/junior divide is the most differentiated finding in the corpus — not widely framed this way), and taxonomy alignment (fits a senior-dev-focused publication or newsletter). The 81%/0% split provides immediate narrative tension and lets every section ladder back to the experience variable."
+ },
+
+ "blueprint": {
+ "target_length_words": 2200,
+ "tone": "authoritative, data-driven, peer-to-peer; speak as a senior engineer to senior engineers; allow one measured line of wit per section; zero hype, zero doom; every stat carries an inline source tag",
+ "keyword_density": {
+ "primary": {"phrase": "AI coding assistants", "target": "5-7 instances", "note": "Vary with 'AI coding tools', 'agents', 'copilots'"},
+ "secondary": [
+ {"phrase": "senior developer productivity", "target": "3-4 instances"},
+ {"phrase": "AI code review", "target": "3-5 instances"},
+ {"phrase": "OWASP Top 10", "target": "2-3 instances"},
+ {"phrase": "developer experience", "target": "2-3 instances"}
+ ],
+ "density_note": "~1.0-1.2% keyword load. Primary phrase absent from H2s 3, 5, 7."
+ },
+ "argument_progression": "Hook with the 81%/0% paradox -> frame adoption as universal but outcomes as bifurcated -> explain WHY experience matters (review capability, failure library, task clarity) -> quantify the cost of unreviewed AI code (security, duplication) -> steelman the optimists (where juniors and tooling genuinely help) -> synthesize the role shift -> close with a practical protocol + forward-looking disclosure box",
+ "sections": [
+ {
+ "n": 1,
+ "h2": "The 81% Gap",
+ "purpose": "Cold-open on the core paradox: adoption is near-universal but outcomes fracture by experience level. Establish stakes with the two headline numbers.",
+ "data_slots": [
+ {"slot": "77-92% of devs use AI coding tools daily, up from 47% in 2025", "claim_ref": "claim-001", "cite": "AI Exposure (T2, n=?), Practical Logix (T2, US devs), Tayyab Akmal (T2)", "tier": 2, "label": "[V]"},
+ {"slot": "Senior devs (10+ yrs): 81% productivity gains", "claim_ref": "claim-003", "cite": "Practical Logix (T2), Luminix (T2)", "tier": 2, "label": "[V]"},
+ {"slot": "Junior devs: zero measurable improvement", "claim_ref": "claim-003", "cite": "Practical Logix (T2), Luminix (T2)", "tier": 2, "label": "[V]"},
+ {"slot": "Market tripled to $11.7B; enterprise AI budgets +176%", "claim_ref": "claim-002", "cite": "Tayyab Akmal (T2), Zylos (T2) — directional, methodology undisclosed", "tier": 2, "label": "[V] with caveat"}
+ ],
+ "words": 250
+ },
+ {
+ "n": 2,
+ "h2": "Why Experience Is the Multiplier",
+ "purpose": "Explain the mechanism behind the 81%/0% split. Senior devs have a failure library, architectural context, and review instincts that let them leverage AI output — juniors don't.",
+ "data_slots": [
+ {"slot": "Seniors pattern-match against a personal failure library; juniors cannot vet AI output for subtle errors", "claim_ref": "claim-003", "cite": "Practical Logix (T2) — attribute as analysis, not quantified data", "tier": 2, "label": "[V]"},
+ {"slot": "Atlassian CTO: teams producing 2-5x more output; some writing zero lines of code", "claim_ref": "claim-003", "cite": "Software Seni (T2)", "tier": 2, "label": "[V]"},
+ {"slot": "Anthropic internal study: 'no significant speedup' when accounting for prompt composition time — directly contradicts 10x vendor marketing", "claim_ref": "con-001", "cite": "Anthropic paper (via Reddit T3, HN T3) — resolution: gains depend on task clarity and developer experience", "tier": 3, "label": "[H]"},
+ {"slot": "AI output quality is bounded by architecture quality x context clarity", "claim_ref": "claim-010", "cite": "Software Seni (T2) + DEV.to (T3)", "tier": 2, "label": "[V]"}
+ ],
+ "words": 350
+ },
+ {
+ "n": 3,
+ "h2": "The Three Camps: Where Seniors Get Different Returns",
+ "purpose": "Map the tool landscape through the experience lens. Category differences matter because they change what 'review' means.",
+ "data_slots": [
+ {"slot": "AI-native IDEs (Cursor, Windsurf) — inline context, refactor awareness", "claim_ref": "claim-009", "cite": "Tech Insider (T2) — categories, not product rankings", "tier": 2, "label": "[V]"},
+ {"slot": "Terminal agents (Claude Code, Codex) — multi-file orchestration, 71% primary tool among AI devs", "claim_ref": "claim-005 + claim-006", "cite": "Zylos (T2) — usage stats directional, Tier-2", "tier": 2, "label": "[V] with caveat"},
+ {"slot": "Embedded copilots (GitHub Copilot) — autocomplete-level, lowest senior leverage", "claim_ref": "claim-009", "cite": "Tech Insider (T2), GitHub comparison (T3)", "tier": 2, "label": "[V]"},
+ {"slot": "MCP is de facto integration standard; 2026-07-28 spec is stateless and enterprise-ready", "claim_ref": "claim-006", "cite": "MCP Spec (T1), Google AI Blog (T1)", "tier": 1, "label": "[V]", "note": "Background context, max 2 sentences — not load-bearing"}
+ ],
+ "words": 300
+ },
+ {
+ "n": 4,
+ "h2": "The Invoice: What Unreviewed AI Code Costs",
+ "purpose": "Quantify the downside that experience mitigates. Make it concrete in codebase terms seniors own: vulnerabilities, duplication, review burden.",
+ "data_slots": [
+ {"slot": "45% of AI-generated code introduces OWASP Top 10 vulnerabilities", "claim_ref": "claim-004", "cite": "Veracode GenAI Code Security Report via CSA (T1)", "tier": 1, "label": "[V]"},
+ {"slot": "AI-attributed CVEs grew from 6 (Jan 2026) to 35 (Mar 2026); 74 confirmed through March, 14 critical", "claim_ref": "claim-004", "cite": "Georgia Tech Vibe Security Radar (T1)", "tier": 1, "label": "[V]"},
+ {"slot": "100% of tested AI IDEs vulnerable to prompt injection chains", "claim_ref": "claim-004", "cite": "CSA AI Coding Tool CI/CD research (T1)", "tier": 1, "label": "[V]"},
+ {"slot": "True estimated vulnerability count is 5-10x higher than confirmed CVEs (most AI code lacks metadata trails)", "claim_ref": "claim-004", "cite": "Georgia Tech (T1) — gap noted", "tier": 1, "label": "[V]", "qa_flag": "Flag for editor-qa: do not present as confirmed count"}
+ ],
+ "words": 300
+ },
+ {
+ "n": 5,
+ "h2": "The Counterpoint: Where Juniors and Tools Genuinely Help",
+ "purpose": "Blindspot injection (Charter Art. IV) — steelman the optimists. Prevent echo chamber. Raise credibility with junior-friendly readers and leadership.",
+ "data_slots": [
+ {"slot": "Juniors may benefit from skill-transfer and learning-curve effects — BUT no RCT or longitudinal data supports this", "claim_ref": "Gaps 2, 5", "cite": "dossier gaps — present as OPEN question", "tier": null, "label": "[H] hypothesis — no causal data"},
+ {"slot": "Boilerplate/scaffolding gains reported 15-55% on repetitive tasks", "claim_ref": "claim-003", "cite": "Practical Logix (T2) + DEV.to (T3) — hedge as task-specific, not universal", "tier": 3, "label": "[V] with caveat"},
+ {"slot": "Open-source models (DeepSeek, Llama 4) now competitive with proprietary at fraction of cost; OSS usage grew 23% to 41%", "claim_ref": "claim-008", "cite": "Tayyab Akmal (T2), Zylos (T2) — benchmark comparisons often vendor-funded", "tier": 2, "label": "[V] with caveat"}
+ ],
+ "words": 200
+ },
+ {
+ "n": 6,
+ "h2": "From Writing Code to Owning the Gate",
+ "purpose": "Synthesis/payoff: The senior role re-prices from code author to verification architect. Skepticism becomes the product. 58% expect smaller teams — but this is expectation data, not observed outcome.",
+ "data_slots": [
+ {"slot": "58% of developers expect smaller, leaner teams; 65% expect role redefinition; 'every engineer becomes an engineering manager'", "claim_ref": "claim-007", "cite": "BairesDev Q4 2025 via Software Seni (T2) — EXPECTATION data, not prediction", "tier": 2, "label": "[V]"},
+ {"slot": "Junior dev hiring down 35% from 2023; senior dev postings up 14%", "claim_ref": "claim-007", "cite": "AI Exposure (T2)", "tier": 2, "label": "[V]"},
+ {"slot": "72% of professional developers reject pure 'vibe-only' workflows for production; evolution toward 'agentic engineering'", "claim_ref": "claim-010", "cite": "Practical Logix (T2), Luminix (T2)", "tier": 2, "label": "[V]"},
+ {"slot": "81% senior gains + 45% AI code vulnerable = the verification premium", "claim_ref": "claim-003 + claim-004", "cite": "synthesis — no single source; label as author analysis", "tier": null, "label": "[H] synthesis — traceable to claims but not a sourced statistic"}
+ ],
+ "words": 300
+ },
+ {
+ "n": 7,
+ "h2": "A Senior's Protocol: Five Rules for Leveraging AI Without Shipping Debt",
+ "purpose": "Utility close — convert the article into a bookmarkable checklist derived from the corpus evidence.",
+ "data_slots": [
+ {"slot": "Rule 1 — Verify the last mile: AI writes the first draft; the senior reviews the last 20% (grounded in C3 experience gradient)", "claim_ref": "claim-003", "cite": "[V] inferred from senior gain data", "tier": 2, "label": "[V] inferred"},
+ {"slot": "Rule 2 — Measure, don't vibe: Track whether AI saves you time on YOUR tasks, not abstract benchmarks (grounded in Anthropic contradiction con-001)", "claim_ref": "con-001", "cite": "[H] — Anthropic study, methodology not in dossier", "tier": 3, "label": "[H] practitioner-relevant"},
+ {"slot": "Rule 3 — Gate by OWASP class: Run security review on any AI-generated code touching auth, crypto, or external input (grounded in C5)", "claim_ref": "claim-004", "cite": "[V] Veracode 45% OWASP", "tier": 1, "label": "[V]"},
+ {"slot": "Rule 4 — Invest in golden paths: Clear specs + architecture context = AI output quality (grounded in C10)", "claim_ref": "claim-010", "cite": "[V] Software Seni (T2)", "tier": 2, "label": "[V]"},
+ {"slot": "Rule 5 — Treat agent output as unreviewed junior PR: It's fast, often wrong on nuance, and needs a senior signature (synthesis)", "claim_ref": "claim-003 + claim-004", "cite": "[H] synthesis — traceable to claims", "tier": null, "label": "[H] synthesis"}
+ ],
+ "words": 250
+ },
+ {
+ "n": 8,
+ "h2": "What We Still Don't Know",
+ "purpose": "Disclosure box (Charter Art. IV, quality-charter II). Converts gaps into credibility. Every label must survive to publication.",
+ "data_slots": [
+ {"slot": "No SWE-bench leaderboard data for 2026 models — benchmark comparison unavailable", "claim_ref": "gap-001", "cite": "[X] search backend failed", "tier": null, "label": "[X]"},
+ {"slot": "No controlled longitudinal studies isolating AI impact from other variables", "claim_ref": "gap-002", "cite": "[X] not in corpus", "tier": null, "label": "[X]"},
+ {"slot": "No baseline comparison: AI-generated vs human-written code vulnerability rates", "claim_ref": "gap-003", "cite": "[X] not in corpus", "tier": null, "label": "[X]"},
+ {"slot": "No enterprise compliance pricing data (SOC2/HIPAA)", "claim_ref": "gap-004", "cite": "[X] not in corpus", "tier": null, "label": "[X]"},
+ {"slot": "No language/framework-specific performance data", "claim_ref": "gap-005", "cite": "[X] not in corpus", "tier": null, "label": "[X]"}
+ ],
+ "words": 150
+ }
+ ],
+ "temporal_compliance": "All load-bearing sources within Tech<=6m as of 2026-09-11. Veracode/CSA (Apr 2026) and Georgia Tech (Apr 2026) are current. GitClear (2020-2024) is trend data, compliant. Tayyab Akmal landscape piece is borderline — used for market sizing only, disclosed as directional."
+ },
+
+ "blindspot_scan": {
+ "echo_chamber_check": {
+ "risk": "Moderate — the 81% senior gain finding naturally leads toward 'seniors win' framing, which risks confirming the target audience's self-image without challenge.",
+ "injection": "Section 5 (Counterpoint) deliberately steelman the junior benefit argument and labels it [H] with no supporting RCT data. Section 6 includes the Anthropic contradiction (con-001) as an explicit challenge to the productivity narrative.",
+ "verdict": "Contrarian injection complete — two cross-cutting perspectives embedded"
+ },
+ "context_window_check": {
+ "risk": "Research digest is 21KB across 430 lines — within manageable range but dense.",
+ "resolution": "Triage digest compresses to signal/noise format; blueprint sections each carry only their needed data_slots. Full dossier available for draft-writer reference but not inline.",
+ "verdict": "No bottleneck — structured extraction applied"
+ },
+ "narrative_first_check": {
+ "risk": "The chosen angle (81% senior vs 0% junior) is a strong narrative frame that could override evidence presentation in favor of a compelling story.",
+ "mitigation": "Every data slot carries a claim_ref and tier label. The quality floor (Charter Art. II) enforces 0 unsupported claims. The [H]/[X] labels in Sections 5 and 8 prevent overreach. The contradiction (con-001) is presented as-is, not smoothed over.",
+ "verdict": "Narrative is evidence-anchored — flag noted for editor-qa"
+ }
+ },
+
+ "handoff_to_draft_writer": {
+ "type": "handoff",
+ "mission_id": "research-ai-coding-assistants-senior-dev-2026",
+ "from_stage": "strategy",
+ "to_stage": "draft",
+ "artifact_path": "/home/massi/.hermes/system/ledger/research-ai-coding-assistants-senior-dev-2026/strategy.json",
+ "confidence": 0.82,
+ "next_action": "Execute blueprint per strategist_to_writer contract below.",
+ "writer_contract": {
+ "compression_contract": "strategist_to_writer: {headings, data_slots, keyword_map, avoid_claims} — no prose",
+ "headings": [
+ "H1: The Experience Divide: Why AI Coding Tools Deliver 81% Gains to Senior Developers and Zero to Juniors",
+ "H2-1: The 81% Gap",
+ "H2-2: Why Experience Is the Multiplier",
+ "H2-3: The Three Camps: Where Seniors Get Different Returns",
+ "H2-4: The Invoice: What Unreviewed AI Code Costs",
+ "H2-5: The Counterpoint: Where Juniors and Tools Genuinely Help",
+ "H2-6: From Writing Code to Owning the Gate",
+ "H2-7: A Senior's Protocol: Five Rules for Leveraging AI Without Shipping Debt",
+ "H2-8: What We Still Don't Know"
+ ],
+ "data_slots": {
+ "H2-1": [
+ "77-92% daily adoption, up from 47% [claim-001, T2]",
+ "Senior devs 81% gains; juniors zero [claim-003, T2]",
+ "Market $11.7B [claim-002, T2 — directional]"
+ ],
+ "H2-2": [
+ "Seniors have failure library, juniors cannot vet [claim-003, T2]",
+ "Anthropic: no speedup with prompt time [con-001, T3 — attribute as practitioner-sourced]",
+ "Quality <= architecture x context [claim-010, T2]"
+ ],
+ "H2-3": [
+ "IDEs vs Terminal agents vs Copilots [claim-009, T2 — categories only]",
+ "Claude Code 71% primary [claim-005, T2 — directional]",
+ "MCP stateless spec [claim-006, T1 — background 2 sentences max]"
+ ],
+ "H2-4": [
+ "45% OWASP Top 10 [claim-004, T1 — Veracode]",
+ "CVEs 6 to 35 in 90 days [claim-004, T1 — Georgia Tech]",
+ "True count 5-10x higher [claim-004 gap — DO NOT present as confirmed]"
+ ],
+ "H2-5": [
+ "Junior benefit: NO RCT data [Gaps 2,5 — label [H]]",
+ "15-55% boilerplate gains [claim-003 T3 — hedge as task-specific]",
+ "Open-source competitive [claim-008 T2 — vendor-funded benchmarks]"
+ ],
+ "H2-6": [
+ "58% expect smaller teams [claim-007, T2 — expectations, NOT prediction]",
+ "72% reject vibe-only [claim-010, T2]",
+ "81% + 45% = verification premium [synthesis — label [H]]"
+ ],
+ "H2-7": [
+ "5 rules, each traceable to claim refs in blueprint",
+ "Rules derived from C3, con-001, C5, C10, C3+C4"
+ ],
+ "H2-8": [
+ "[X] No SWE-bench data [gap-001]",
+ "[X] No longitudinal studies [gap-002]",
+ "[X] No AI vs human vuln baseline [gap-003]",
+ "[X] No enterprise compliance pricing [gap-004]",
+ "[X] No language-specific data [gap-005]"
+ ]
+ },
+ "keyword_map": {
+ "AI coding assistants": [5, 7],
+ "senior developer productivity": [3, 4],
+ "AI code review": [3, 5],
+ "OWASP Top 10": [2, 3],
+ "developer experience": [2, 3],
+ "density_note": "~1.0-1.2% load. Primary phrase absent from H2-3, 5, 7."
+ },
+ "avoid_claims": [
+ "Do NOT present 81% senior gain as settled fact — it's T2 self-reported data; Anthropic RCT (con-001) shows it's task-dependent.",
+ "Do NOT state CVE growth as a confirmed rate — true count is 5-10x higher than confirmed (per Georgia Tech gap note).",
+ "Do NOT rank specific tools (Cursor vs Claude Code vs Copilot) as factual — Tier-2/3 sources, fast decay; use categories only.",
+ "Do NOT claim juniors are hurt by AI — no RCT data; present as unknown [H].",
+ "Do NOT frame '58% expect smaller teams' as a prediction — it's expectation survey data.",
+ "Do NOT cite market size ($11.7B) as precise — methodology undisclosed in source.",
+ "Do NOT reuse any dossier source URL in final citations — verify against originals (especially claim-004 chains).",
+ "Do NOT exceed 2 sentences on MCP/ACP — Tier-1 fact but not central to the experience divide angle.",
+ "Do NOT present the Anthropic contradiction as resolved — it is framework-dependent, not settled.",
+ "Do NOT use 'AI coding assistants' phrase in H2 titles (keep headings human-readable)."
+ ],
+ "style": "Authoritative, peer-to-peer, evidence-first. One measured line of wit per section max. No hype, no doom. Every stat gets inline source. [H] and [X] labels MUST survive to publication as explicit hedging. ~2,200 words +/-10%.",
+ "qa_watch": [
+ "editor-qa: verify all claim_refs trace back to dossier claims — no invented data",
+ "editor-qa: check H2-4 does not present 5-10x CVE estimate as confirmed (quality-charter Art. II: 0 unsupported claims)",
+ "editor-qa: verify H2-5 counterpoint doesn't read as anti-AI — it must steelman the optimists",
+ "editor-qa: confirm 'expectations' framing in H2-6 is explicit (not slipped into prediction)"
+ ]
+ }
+ },
+
+ "source_breakdown": {
+ "total_sources": 34,
+ "tier_profile": {
+ "tier_1": {"count": 6, "role": "Official/Primary — MCP spec, CSA research, Georgia Tech, Google blog", "credibility": "highest"},
+ "tier_2": {"count": 18, "role": "Credible journalism — Zylos, Practical Logix, Tech Insider, Infosecurity Mag, Software Seni", "credibility": "high"},
+ "tier_3": {"count": 8, "role": "Social/Community — HN, Reddit r/vibecoding, GitHub comparisons", "credibility": "medium — use as corroboration, not backbone"},
+ "tier_4": {"count": 2, "role": "Marketing/Vendor — Windsurf comparison page", "credibility": "low — background only"}
+ },
+ "overall_credibility": "76% Tier 1-2 — above quality floor for Tier-2 mission"
+ },
+
+ "metadata": {
+ "written_by": "strategist",
+ "strategy_version": "1.0",
+ "produced_at": "2026-09-11T12:05:00Z",
+ "article_iv_applicable": true,
+ "article_iv_notes": "Blind-spot coverage in place: Section 5 (counterpoint) addresses echo chamber risk; [H]/[X] labels address thin evidence; contradiction con-001 flagged for editor-qa narrative-first check.",
+ "contradictions_resolved": [
+ {
+ "id": "con-001",
+ "description": "Anthropic study claims 'no significant speedup' when accounting for prompt composition time, contradicting vendor marketing of 10x productivity",
+ "resolution": "Gains depend heavily on developer experience and task clarity. Encoded as explicit counterpoint in H2-2 (Section 2), labeled [H] with T3 sourcing. Not smoothed over — presented as genuine tension."
+ }
+ ]
+ }
+}

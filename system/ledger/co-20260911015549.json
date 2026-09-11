@@ -1,0 +1,86 @@
+{
+ "mission_id": "co-20260911015549",
+ "task": "\u0628\u062d\u062b \u0639\u0646 herdr agent",
+ "tier": "tier_2",
+ "started": "2026-09-11T00:55:49.233903+00:00",
+ "steps": [
+ {
+ "step": "context_budget",
+ "result": {
+ "model_context_window": 128000,
+ "tier": "tier_2",
+ "contracts_loaded": [
+ "registry.json",
+ "protocol.md",
+ "routing.yaml",
+ "quality-charter.md"
+ ],
+ "contract_tokens": {
+ "registry.json": 4146,
+ "protocol.md": 2124,
+ "routing.yaml": 3392,
+ "quality-charter.md": 2138
+ },
+ "total_contract_tokens": 11800,
+ "system_prompt_overhead": 500,
+ "safety_margin_tokens": 25600,
+ "remaining_for_work": 90100,
+ "utilization_pct": 29.6,
+ "status": "healthy",
+ "recommendation": "HEALTHY: tier_2 has sufficient context budget"
+ }
+ },
+ {
+ "step": "heartbeat",
+ "result": {
+ "status": "healthy",
+ "last_seen": "2026-09-11T00:55:14.145192+00:00",
+ "delta_minutes": 0.6,
+ "action": "continue"
+ }
+ },
+ {
+ "step": "model_selection",
+ "result": {
+ "selected": "ling-3.0-flash-fin-free",
+ "provider": "opencode-free",
+ "tier": "standard_plus",
+ "score": 0.675,
+ "reason": "task=\u0628\u062d\u062b \u0639\u0646 herdr agent, complexity=high",
+ "fallback_chain": [
+ "ling-3.0-flash-fin-free",
+ "meituan-longcat-2.0-free",
+ "human"
+ ]
+ }
+ },
+ {
+ "step": "protocol_init",
+ "result": {
+ "mission_id": "co-20260911015549",
+ "message_budget": {
+ "mission_id": "co-20260911015549",
+ "messages_sent": 0,
+ "messages_remaining": 12,
+ "budget_exhausted": false,
+ "can_send": true
+ },
+ "group_room_turns": 0,
+ "group_room_remaining": 8
+ }
+ },
+ {
+ "step": "protocol_execution",
+ "result": "Executed 5 agents via protocol"
+ }
+ ],
+ "status": "completed",
+ "completed": "2026-09-11T00:55:49.599945+00:00",
+ "agents_used": [
+ "omni-researcher",
+ "strategist",
+ "draft-writer",
+ "editor-qa",
+ "publisher"
+ ]
+}

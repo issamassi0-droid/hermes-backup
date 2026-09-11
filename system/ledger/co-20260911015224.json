@@ -1,0 +1,65 @@
+{
+ "mission_id": "co-20260911015224",
+ "task": "\u0628\u062d\u062b \u0639\u0646 \u062a\u062c\u0627\u0631\u0628 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u064a\u0646 \u0645\u0639 herdr agent",
+ "tier": "tier_2",
+ "started": "2026-09-11T00:52:24.286217+00:00",
+ "steps": [
+ {
+ "step": "context_budget",
+ "result": {
+ "model_context_window": 128000,
+ "tier": "tier_2",
+ "contracts_loaded": [
+ "registry.json",
+ "protocol.md",
+ "routing.yaml",
+ "quality-charter.md"
+ ],
+ "contract_tokens": {
+ "registry.json": 4146,
+ "protocol.md": 2124,
+ "routing.yaml": 3392,
+ "quality-charter.md": 2138
+ },
+ "total_contract_tokens": 11800,
+ "system_prompt_overhead": 500,
+ "safety_margin_tokens": 25600,
+ "remaining_for_work": 90100,
+ "utilization_pct": 29.6,
+ "status": "healthy",
+ "recommendation": "HEALTHY: tier_2 has sufficient context budget"
+ }
+ },
+ {
+ "step": "heartbeat",
+ "result": {
+ "output": "{\"status\": \"stale\", \"last_seen\": \"2026-09-11T00:26:48.235993+00:00\", \"delta_minutes\": 25.6, \"action\": \"enter_degraded_mode\", \"message\": \"Architect stale for 26 minutes \\u2014 DEGRADED MODE\"}\n{\"timestamp\": \"2026-09-11T00:52:24.353676+00:00\", \"mode\": \"DEGRADED\", \"reason\": \"Architect stale for 26 minutes \\u2014 DEGRADED MODE\", \"actions\": [\"Pause all in-flight missions\", \"Log as blocker\", \"Notify human directly (not through Architect)\", \"No new missions accepted\"]}",
+ "stderr": ""
+ }
+ },
+ {
+ "step": "model_selection",
+ "result": {
+ "selected": "ling-3.0-flash-fin-free",
+ "provider": "opencode-free",
+ "tier": "standard_plus",
+ "score": 0.675,
+ "reason": "task=\u0628\u062d\u062b \u0639\u0646 \u062a\u062c\u0627\u0631\u0628 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u064a\u0646 \u0645\u0639 herdr agent, complexity=high",
+ "fallback_chain": [
+ "ling-3.0-flash-fin-free",
+ "meituan-longcat-2.0-free",
+ "human"
+ ]
+ }
+ }
+ ],
+ "status": "completed",
+ "completed": "2026-09-11T00:52:24.432099+00:00",
+ "agents_used": [
+ "omni-researcher",
+ "strategist",
+ "draft-writer",
+ "editor-qa",
+ "publisher"
+ ]
+}

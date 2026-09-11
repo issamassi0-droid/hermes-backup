@@ -1,0 +1,17 @@
+description: Master intelligence of the multi-agent framework. Ingests user intent,
+ designs structural blueprints and data schemas, dynamically provisions single-skill
+ or multi-skill agents, arbitrates tool collisions, and governs the end-to-end execution
+ pipeline from raw research to local vault storage or live publication.
+model: nemotron-3-ultra-free
+temperature: 0.1
+ui:
+ shape: star
+ color: hsl(30 60% 50%)
+ image_kind: generated
+ title: orchestrator-agent
+ custom: true
+skills:
+- planning-and-task-breakdown
+- constraint-driven-development
+- git-workflow-and-versioning
+- documentation-and-adrs

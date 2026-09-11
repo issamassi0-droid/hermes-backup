@@ -1,0 +1,86 @@
+{
+ "mission_id": "co-20260911021332",
+ "task": "\u0645\u0627 \u0647\u0648 \u0646\u0645\u0648\u0630\u062c ling-3.0-flash\u061f",
+ "tier": "tier_1",
+ "started": "2026-09-11T01:13:32.753709+00:00",
+ "steps": [
+ {
+ "step": "context_budget",
+ "result": {
+ "model_context_window": 128000,
+ "tier": "tier_1",
+ "contracts_loaded": [
+ "registry.json",
+ "protocol.md"
+ ],
+ "contract_tokens": {
+ "registry.json": 4146,
+ "protocol.md": 2124
+ },
+ "total_contract_tokens": 6270,
+ "system_prompt_overhead": 500,
+ "safety_margin_tokens": 25600,
+ "remaining_for_work": 95630,
+ "utilization_pct": 25.3,
+ "status": "healthy",
+ "recommendation": "HEALTHY: tier_1 has sufficient context budget"
+ }
+ },
+ {
+ "step": "heartbeat",
+ "result": {
+ "status": "healthy",
+ "last_seen": "2026-09-11T01:13:32.328507+00:00",
+ "delta_minutes": 0.0,
+ "action": "continue"
+ }
+ },
+ {
+ "step": "model_selection",
+ "result": {
+ "selected": "ling-3.0-flash-fin-free",
+ "provider": "opencode-free",
+ "tier": "standard_plus",
+ "score": 0.675,
+ "reason": "task=\u0645\u0627 \u0647\u0648 \u0646\u0645\u0648\u0630\u062c ling-3.0-flash\u061f, complexity=medium",
+ "fallback_chain": [
+ "ling-3.0-flash-fin-free",
+ "meituan-longcat-2.0-free",
+ "human"
+ ]
+ }
+ },
+ {
+ "step": "protocol_init",
+ "result": {
+ "mission_id": "co-20260911021332",
+ "message_budget": {
+ "mission_id": "co-20260911021332",
+ "messages_sent": 0,
+ "messages_remaining": 12,
+ "budget_exhausted": false,
+ "can_send": true
+ },
+ "group_room_turns": 0,
+ "group_room_remaining": 8
+ }
+ },
+ {
+ "step": "protocol_execution",
+ "result": "Executed 2 agents via protocol"
+ },
+ {
+ "step": "escalation_health",
+ "result": {
+ "output": "Running system health check...\n{\n \"timestamp\": \"2026-09-11T01:13:33.050311+00:00\",\n \"checks\": {\n \"factual_error_rate\": {\n \"value\": 0.0,\n \"target\": 5,\n \"status\": \"pass\"\n },\n \"source_verification_rate\": {\n \"value\": 100.0,\n \"target\": 90,\n \"status\": \"pass\"\n },\n \"human_override_rate\": {\n \"value\": 3,\n \"target\": 20,\n \"status\": \"pass\"\n },\n \"escalations_per_week\": {\n \"value\": 2,\n \"target\": 3,\n \"status\": \"pass\"\n },\n \"failover_events\": {\n \"value\": 1,\n \"target\": 0,\n \"status\": \"fail\"\n }\n },\n \"overall_status\": \"needs_improvement\",\n \"failed_checks\": 1,\n \"version\": \"1.0\"\n}",
+ "stderr": ""
+ }
+ }
+ ],
+ "status": "completed",
+ "completed": "2026-09-11T01:13:33.056521+00:00",
+ "agents_used": [
+ "omni-researcher",
+ "publisher"
+ ]
+}

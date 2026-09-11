@@ -1,0 +1,270 @@
+{
+ "$schema": "https://hermes.dev/schemas/task-ledger.v1.json",
+ "version": "1.0.0",
+ "description": "Task ledger schema. One ledger per mission, at /home/massi/.hermes/system/ledger/<mission_id>/. Each stage writes one file.",
+ "layout": {
+ "root": "/home/massi/.hermes/system/ledger/<mission_id>/",
+ "files": {
+ "ticket.json": "Written by architect at mission open. The routing ticket.",
+ "schema.json": "Written by architect. The Macro-Architectural Schema for this mission.",
+ "research.json": "Written by omni-researcher on completion.",
+ "video.json": "Written by deep-dive on completion (tier 2/3 only).",
+ "strategy.json": "Written by strategist on completion.",
+ "draft.md": "Written by draft-writer on completion.",
+ "verification.json": "Written by editor-qa on completion (approved OR rejected).",
+ "publish.json": "Written by publisher on completion.",
+ "analytics.json": "Written by analytics on completion (tier 3 only).",
+ "coverage.json": "Written by architect at mission close. The blind-spot coverage matrix.",
+ "workspace/research_report.md": "Written by omni-researcher. Full research report.",
+ "workspace/prototype.py": "Written by a builder agent (if applicable).",
+ "workspace/slides.md": "Written by a video producer agent (if applicable)."
+ },
+ "directories": {
+ "workspace": {
+ "path": "/home/massi/.hermes/system/ledger/<mission_id>/workspace/",
+ "description": "Shared working directory for all agents in this mission.",
+ "survives_restarts": true
+ },
+ "vault": {
+ "path": "/home/massi/ObsidianVault/",
+ "description": "Shared Obsidian vault. All agents may read. Only orchestrator and librarian profiles may write."
+ }
+ }
+ },
+ "ticket_schema": {
+ "type": "object",
+ "required": [
+ "mission_id",
+ "opened_at",
+ "domain",
+ "stakes",
+ "complexity",
+ "output_type",
+ "latency",
+ "budget_hint",
+ "tier"
+ ],
+ "properties": {
+ "mission_id": {
+ "type": "string",
+ "pattern": "^[0-9]{8}_[a-z0-9]{6}$"
+ },
+ "opened_at": {
+ "type": "string",
+ "format": "date-time"
+ },
+ "domain": {
+ "type": "string",
+ "examples": [
+ "content/publishing",
+ "engineering",
+ "advisory"
+ ]
+ },
+ "stakes": {
+ "enum": [
+ "trivial",
+ "moderate",
+ "high",
+ "irreversible"
+ ]
+ },
+ "complexity": {
+ "enum": [
+ "single-fact",
+ "multi-step-bounded",
+ "open-ended"
+ ]
+ },
+ "output_type": {
+ "enum": [
+ "inline_chat",
+ "artifact",
+ "executed_action",
+ "decision"
+ ]
+ },
+ "latency": {
+ "enum": [
+ "real-time",
+ "can_wait"
+ ]
+ },
+ "budget_hint": {
+ "enum": [
+ "tiny",
+ "small",
+ "medium",
+ "large"
+ ]
+ },
+ "tier": {
+ "enum": [
+ "0",
+ "1",
+ "2",
+ "3"
+ ]
+ },
+ "temporal_bounds": {
+ "type": "string",
+ "examples": [
+ "News: <=7d",
+ "Tech: <=6m",
+ "Deep: <=12m",
+ "none"
+ ]
+ },
+ "confidence_threshold": {
+ "type": "number",
+ "minimum": 0,
+ "maximum": 1
+ },
+ "assumption": {
+ "type": "string",
+ "description": "Any assumption made in lieu of asking a clarifying question."
+ }
+ }
+ },
+ "stage_entry_schema": {
+ "type": "object",
+ "required": [
+ "stage",
+ "agent",
+ "started_at",
+ "completed_at",
+ "status",
+ "confidence"
+ ],
+ "properties": {
+ "stage": {
+ "type": "string"
+ },
+ "agent": {
+ "type": "string"
+ },
+ "started_at": {
+ "type": "string",
+ "format": "date-time"
+ },
+ "completed_at": {
+ "type": "string",
+ "format": "date-time"
+ },
+ "status": {
+ "enum": [
+ "completed",
+ "rejected",
+ "blocked",
+ "skipped"
+ ]
+ },
+ "confidence": {
+ "type": "number",
+ "minimum": 0,
+ "maximum": 1
+ },
+ "tokens_used": {
+ "type": "integer"
+ },
+ "notes": {
+ "type": "string"
+ },
+ "artifact": {
+ "type": "string",
+ "description": "Relative path to the artifact this stage produced."
+ }
+ }
+ },
+ "coverage_schema": {
+ "type": "object",
+ "required": [
+ "mission_id",
+ "closed_at",
+ "blind_spot_matrix",
+ "tier_events"
+ ],
+ "properties": {
+ "mission_id": {
+ "type": "string"
+ },
+ "closed_at": {
+ "type": "string",
+ "format": "date-time"
+ },
+ "blind_spot_matrix": {
+ "type": "array",
+ "items": {
+ "type": "object",
+ "required": [
+ "_blind_spot",
+ "coverage_mechanism"
+ ],
+ "properties": {
+ "_blind_spot": {
+ "type": "string"
+ },
+ "coverage_mechanism": {
+ "type": "string"
+ },
+ "verified": {
+ "type": "boolean"
+ }
+ }
+ }
+ },
+ "tier_events": {
+ "type": "array",
+ "items": {
+ "type": "object",
+ "required": [
+ "at",
+ "from",
+ "to",
+ "signal"
+ ],
+ "properties": {
+ "at": {
+ "type": "string",
+ "format": "date-time"
+ },
+ "from": {
+ "enum": [
+ "0",
+ "1",
+ "2",
+ "3"
+ ]
+ },
+ "to": {
+ "enum": [
+ "0",
+ "1",
+ "2",
+ "3"
+ ]
+ },
+ "signal": {
+ "type": "string"
+ }
+ }
+ }
+ },
+ "tokens_total": {
+ "type": "integer"
+ },
+ "quality_verdict": {
+ "enum": [
+ "shipped",
+ "revised_then_shipped",
+ "rejected",
+ "aborted"
+ ]
+ }
+ }
+ },
+ "retention": {
+ "policy": "Keep the last 100 mission ledgers. Archive older ones to /home/massi/ObsidianVault/Logs/ledger-archive/.",
+ "sweep_trigger": "architect calibrate"
+ }
+}

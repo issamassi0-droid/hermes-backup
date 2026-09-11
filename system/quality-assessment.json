@@ -1,0 +1,67 @@
+{
+ "assessment_date": "2026-09-11",
+ "queries_tested": 5,
+ "total_claims": 21,
+ "supported_claims": 18,
+ "unsupported_claims": 3,
+ "factual_error_rate_pct": 14.29,
+ "source_verification_rate_pct": 84.62,
+ "quality_targets": {
+ "factual_error_rate_target": "< 5%",
+ "source_verification_rate_target": "> 80%",
+ "human_override_rate_target": "< 20%"
+ },
+ "verdict": "NEEDS_IMPROVEMENT",
+ "query_reports": [
+ {
+ "query": "What is the Cabinet-Office system?",
+ "claims_total": 4,
+ "claims_supported": 4,
+ "claims_unsupported": 0,
+ "support_rate": "100.0%",
+ "sources_total": 3,
+ "sources_verified": 2,
+ "sources_unverified": 1
+ },
+ {
+ "query": "How does the model gateway work?",
+ "claims_total": 4,
+ "claims_supported": 4,
+ "claims_unsupported": 0,
+ "support_rate": "100.0%",
+ "sources_total": 2,
+ "sources_verified": 2,
+ "sources_unverified": 0
+ },
+ {
+ "query": "What is the quality charter?",
+ "claims_total": 4,
+ "claims_supported": 4,
+ "claims_unsupported": 0,
+ "support_rate": "100.0%",
+ "sources_total": 3,
+ "sources_verified": 3,
+ "sources_unverified": 0
+ },
+ {
+ "query": "What are the system tiers?",
+ "claims_total": 4,
+ "claims_supported": 4,
+ "claims_unsupported": 0,
+ "support_rate": "100.0%",
+ "sources_total": 2,
+ "sources_verified": 2,
+ "sources_unverified": 0
+ },
+ {
+ "query": "How does deduplication work?",
+ "claims_total": 5,
+ "claims_supported": 2,
+ "claims_unsupported": 3,
+ "support_rate": "40.0%",
+ "sources_total": 3,
+ "sources_verified": 2,
+ "sources_unverified": 1
+ }
+ ]
+}

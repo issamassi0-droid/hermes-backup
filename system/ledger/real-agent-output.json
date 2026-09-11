@@ -1,0 +1,16 @@
+{
+ "query": "تحليل مصادر حقيقية عن Hermes Agent",
+ "agent": "@omni-researcher",
+ "output": "تحليل 5 استنتاجات رئيسية: حلقة تعلم مغلقة مختلفة عن المنافسين، Kanban متعدد الوكلاء مع SQLite، آلية GEPA مقبولة كـ ICLR 2026 Oral، 40% إنجاز أسرع بعد 20+ مهارة (خاصة بالمجال)، Hermes حالياً وكيل واحد مع أبناء مؤقتين معزولين. التناقضات: GitHub stars (95K vs 170 contributors — كلاهما ممكن)، Tools count (70+ vs 40+ — اختلاف إصدارات). النقاط العمياء: غياب المعايير المستقلة، جودة المهارات المولّدة غير مقاسة، التكلفة المخفية 73% token overhead، الفجوة بين التسويق والواقع، مخاطر الأمان طويل المدى للمهارات المولّدة.",
+ "sources": [
+ {"url": "https://www.tonyreviewsthings.com/hermes-agent-by-nous-research-review/", "evidence_grade": "[V]"},
+ {"url": "https://axis-intelligence.com/hermes-agent-review-tested/", "evidence_grade": "[V]"},
+ {"url": "https://fast.io/resources/hermes-agent-review-2026/", "evidence_grade": "[V]"},
+ {"url": "https://github.com/NousResearch/hermes-agent/issues/344", "evidence_grade": "[V]"},
+ {"url": "https://www.openaitoolshub.org/en/blog/hermes-agent-ai-review", "evidence_grade": "[M]"}
+ ],
+ "claims_verified": 8,
+ "claims_total": 10,
+ "contradictions_found": 2,
+ "blind_spots_identified": 5
+}

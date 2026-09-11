@@ -1,0 +1,93 @@
+{
+ "mission_id": "co-20260911021318",
+ "task": "\u0627\u0628\u062d\u062b \u0639\u0646 \u062a\u0637\u0648\u0631\u0627\u062a \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0645\u062a\u0639\u062f\u062f \u0627\u0644\u0648\u0643\u0644\u0627\u0621 \u0641\u064a 2026",
+ "tier": "tier_2",
+ "started": "2026-09-11T01:13:18.843702+00:00",
+ "steps": [
+ {
+ "step": "context_budget",
+ "result": {
+ "model_context_window": 128000,
+ "tier": "tier_2",
+ "contracts_loaded": [
+ "registry.json",
+ "protocol.md",
+ "routing.yaml",
+ "quality-charter.md"
+ ],
+ "contract_tokens": {
+ "registry.json": 4146,
+ "protocol.md": 2124,
+ "routing.yaml": 3392,
+ "quality-charter.md": 2138
+ },
+ "total_contract_tokens": 11800,
+ "system_prompt_overhead": 500,
+ "safety_margin_tokens": 25600,
+ "remaining_for_work": 90100,
+ "utilization_pct": 29.6,
+ "status": "healthy",
+ "recommendation": "HEALTHY: tier_2 has sufficient context budget"
+ }
+ },
+ {
+ "step": "heartbeat",
+ "result": {
+ "status": "healthy",
+ "last_seen": "2026-09-11T01:05:27.711969+00:00",
+ "delta_minutes": 7.9,
+ "action": "continue"
+ }
+ },
+ {
+ "step": "model_selection",
+ "result": {
+ "selected": "ling-3.0-flash-fin-free",
+ "provider": "opencode-free",
+ "tier": "standard_plus",
+ "score": 0.675,
+ "reason": "task=\u0627\u0628\u062d\u062b \u0639\u0646 \u062a\u0637\u0648\u0631\u0627\u062a \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0645\u062a\u0639\u062f\u062f \u0627\u0644\u0648\u0643\u0644\u0627\u0621 \u0641\u064a 2026, complexity=high",
+ "fallback_chain": [
+ "ling-3.0-flash-fin-free",
+ "meituan-longcat-2.0-free",
+ "human"
+ ]
+ }
+ },
+ {
+ "step": "protocol_init",
+ "result": {
+ "mission_id": "co-20260911021318",
+ "message_budget": {
+ "mission_id": "co-20260911021318",
+ "messages_sent": 0,
+ "messages_remaining": 12,
+ "budget_exhausted": false,
+ "can_send": true
+ },
+ "group_room_turns": 0,
+ "group_room_remaining": 8
+ }
+ },
+ {
+ "step": "protocol_execution",
+ "result": "Executed 5 agents via protocol"
+ },
+ {
+ "step": "escalation_health",
+ "result": {
+ "output": "Running system health check...\n{\n \"timestamp\": \"2026-09-11T01:13:19.282013+00:00\",\n \"checks\": {\n \"factual_error_rate\": {\n \"value\": 0.0,\n \"target\": 5,\n \"status\": \"pass\"\n },\n \"source_verification_rate\": {\n \"value\": 100.0,\n \"target\": 90,\n \"status\": \"pass\"\n },\n \"human_override_rate\": {\n \"value\": 3,\n \"target\": 20,\n \"status\": \"pass\"\n },\n \"escalations_per_week\": {\n \"value\": 2,\n \"target\": 3,\n \"status\": \"pass\"\n },\n \"failover_events\": {\n \"value\": 1,\n \"target\": 0,\n \"status\": \"fail\"\n }\n },\n \"overall_status\": \"needs_improvement\",\n \"failed_checks\": 1,\n \"version\": \"1.0\"\n}",
+ "stderr": ""
+ }
+ }
+ ],
+ "status": "completed",
+ "completed": "2026-09-11T01:13:19.288098+00:00",
+ "agents_used": [
+ "omni-researcher",
+ "strategist",
+ "draft-writer",
+ "editor-qa",
+ "publisher"
+ ]
+}
