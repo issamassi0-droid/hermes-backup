@@ -21,29 +21,35 @@ def get_backup_files():
 
     # System contracts
     system_dir = os.path.join(SOURCE_BASE, "system")
-    for f in os.listdir(system_dir):
-        if f.endswith(('.md', '.json', '.yaml', '.yml')):
-            files.append(f"system/{f}")
+    if os.path.exists(system_dir):
+        for f in os.listdir(system_dir):
+            if f.endswith(('.md', '.json', '.yaml', '.yml')):
+                files.append(f"system/{f}")
 
     # System scripts
     scripts_dir = os.path.join(SOURCE_BASE, "system/scripts")
-    for f in os.listdir(scripts_dir):
-        if f.endswith('.py'):
-            files.append(f"system/scripts/{f}")
+    if os.path.exists(scripts_dir):
+        for f in os.listdir(scripts_dir):
+            if f.endswith('.py'):
+                files.append(f"system/scripts/{f}")
 
-    # Profile SOUL.md and profile.yaml
+    # Profile SOUL.md, profile.yaml, and config.yaml
     profiles_dir = os.path.join(SOURCE_BASE, "profiles")
-    for folder in os.listdir(profiles_dir):
-        if folder.startswith('.'):
-            continue
-        profile_dir = os.path.join(profiles_dir, folder)
-        if os.path.isdir(profile_dir):
-            soul = os.path.join(profile_dir, "SOUL.md")
-            profile = os.path.join(profile_dir, "profile.yaml")
-            if os.path.exists(soul):
-                files.append(f"profiles/{folder}/SOUL.md")
-            if os.path.exists(profile):
-                files.append(f"profiles/{folder}/profile.yaml")
+    if os.path.exists(profiles_dir):
+        for folder in os.listdir(profiles_dir):
+            if folder.startswith('.'):
+                continue
+            profile_dir = os.path.join(profiles_dir, folder)
+            if os.path.isdir(profile_dir):
+                soul = os.path.join(profile_dir, "SOUL.md")
+                profile = os.path.join(profile_dir, "profile.yaml")
+                config = os.path.join(profile_dir, "config.yaml")
+                if os.path.exists(soul):
+                    files.append(f"profiles/{folder}/SOUL.md")
+                if os.path.exists(profile):
+                    files.append(f"profiles/{folder}/profile.yaml")
+                if os.path.exists(config):
+                    files.append(f"profiles/{folder}/config.yaml")
 
     # Ledger directory (JSON only)
     ledger_dir = os.path.join(SOURCE_BASE, "system/ledger")
