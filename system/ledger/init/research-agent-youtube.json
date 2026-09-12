@@ -1,0 +1,8 @@
+{
+  "agent": "research-agent-youtube",
+  "status": "healthy",
+  "last_init": "2026-09-11T20:32:48.144397+00:00",
+  "init_count": 1,
+  "failures": [],
+  "updated": "2026-09-11T20:32:48.144415+00:00"
+}

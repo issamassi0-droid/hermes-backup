@@ -10,6 +10,8 @@ ui_meta:
     imageKind: photo
     title: ''
     custom: true
+    groups: []
+    group: null
   shape: blobatar
   imageKind: photo
   title: Deep Dive
@@ -17,7 +19,9 @@ ui_meta:
   color: hsl(28 60% 50%)
   custom: true
 _ui_meta_revisions:
-  hermes-bots: 3
+  hermes-bots: 8
 ui:
   title: research-agent-youtube
+skills:
+  - deep-web-research
 model: nemotron-3-ultra-free

@@ -2,7 +2,14 @@ description: multi-source research bot. Searches official sources, news, Twitter
   Substack, Reddit, deep web. Deduplicates, classifies
 description_auto: false
 ui_meta:
-  hermes-bots: null
+  hermes-bots:
+    groups: []
+    group: null
+    shape: hexagon
+    color: hsl(79 68% 58%)
+    imageKind: photo
+    title: ''
+    custom: true
   shape: blobatar
   imageKind: photo
   title: Omni-Researcher
@@ -10,7 +17,9 @@ ui_meta:
   color: hsl(160 50% 40%)
   custom: true
 _ui_meta_revisions:
-  hermes-bots: 3
+  hermes-bots: 6
 ui:
   title: research-agent-multi
+skills:
+  - deep-web-research
 model: nemotron-3-ultra-free

@@ -222,6 +222,7 @@ dynamic_context:
         - routing.yaml
         - guard-duplicate-serve.md
         - guard-operational-safety.md
+        - deep-web-research/SKILL.md
       estimated_tokens: 7083
       warning: Partial system awareness. Tier 0-1 recommended.
     large:

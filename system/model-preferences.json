@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "created": "2026-09-11T00:00:00+01:00",
+  "description": "Agent preferences and historical acceptance rates for model gateway selection",
+  "preferences": {
+    "orchestrator-agent:general": {
+      "acceptance_rate": 0.85,
+      "notes": "Orchestrator prefers capable models for complex routing decisions"
+    },
+    "research-agent-multi:research": {
+      "acceptance_rate": 0.90,
+      "notes": "Research agent prefers fast models for web searches"
+    },
+    "research-agent-youtube:video": {
+      "acceptance_rate": 0.75,
+      "notes": "Video research can use standard models"
+    },
+    "strategy-agent:strategy": {
+      "acceptance_rate": 0.80,
+      "notes": "Strategy needs deeper reasoning"
+    },
+    "drafting-agent:draft": {
+      "acceptance_rate": 0.85,
+      "notes": "Drafting prefers standard_plus for article writing"
+    },
+    "qa-agent:verify": {
+      "acceptance_rate": 0.90,
+      "notes": "QA needs different model family than writer"
+    },
+    "distribution-agent:publish": {
+      "acceptance_rate": 0.80,
+      "notes": "Publishing is straightforward"
+    },
+    "analytics-agent:analyze": {
+      "acceptance_rate": 0.75,
+      "notes": "Analytics can use standard models"
+    }
+  }
+}

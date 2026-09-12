@@ -71,14 +71,14 @@ def retry(max_attempts: int = 3, delay: float = 1.0, backoff: float = 2.0):
 if __name__ == "__main__":
     cb = CircuitBreaker("test")
 
-    @retry(max_attempts=3)
+    @retry(max_attempts=3, delay=0.1, backoff=1.5)
     def test_func():
         import random
-        if random.random() < 0.7:
+        if random.random() < 0.3:
             raise Exception("random failure")
         return "success"
 
-    for i in range(5):
+    for i in range(3):
         try:
             result = cb.call(test_func)
             print(f"  Attempt {i+1}: {result}")

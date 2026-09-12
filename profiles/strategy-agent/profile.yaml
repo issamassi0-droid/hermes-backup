@@ -1,24 +1,26 @@
 description: Cognitive bridge between research and writing. Ingests raw data, filters
- signal from noise, selects optimal angles, and builds structural blueprint
+  signal from noise, selects optimal angles, and builds structural blueprint
 model: meituan/longcat-2.0:free
 temperature: 0.3
 ui:
- shape: hexagon
- color: hsl(180 50% 45%)
- image_kind: generated
- title: strategy-agent
- custom: true
+  shape: hexagon
+  color: hsl(180 50% 45%)
+  image_kind: generated
+  title: strategy-agent
+  custom: true
 skills:
-- research
-- grounded-citations
-- humanizer
-- creative/baoyu-infographic
+  - research
+  - grounded-citations
+  - humanizer
+  - creative/baoyu-infographic
 ui_meta:
- hermes-bots: null
- shape: drop
- color: hsl(12 68% 58%)
- imageKind: photo
- title: ''
- custom: true
+  hermes-bots:
+    groups: []
+    group: null
+  shape: drop
+  color: hsl(12 68% 58%)
+  imageKind: photo
+  title: ''
+  custom: true
 _ui_meta_revisions:
- hermes-bots: 1
+  hermes-bots: 3

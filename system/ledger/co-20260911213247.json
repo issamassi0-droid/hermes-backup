@@ -1,0 +1,78 @@
+{
+  "mission_id": "co-20260911213247",
+  "task": "Write a short guide about how to reduce AI response latency in Hermes agent workflows",
+  "tier": "tier_2",
+  "started": "2026-09-11T20:32:47.825726+00:00",
+  "steps": [
+    {
+      "step": "context_budget",
+      "result": {
+        "output": "tier_0: 305.0% overhead \u2192 -262400 tokens remaining\n  tier_1: 130.0% overhead \u2192 -38400 tokens remaining\n  tier_2: 56.0% overhead \u2192 56320 tokens remaining\n  tier_3: 32.0% overhead \u2192 87040 tokens remaining",
+        "stderr": ""
+      }
+    },
+    {
+      "step": "heartbeat",
+      "result": {
+        "output": "\u2713 Heartbeat: status=healthy, delta=0.0min\n\u2713 Degraded mode: 3 actions",
+        "stderr": ""
+      }
+    },
+    {
+      "step": "model_selection",
+      "result": {
+        "selected": "ling-3.0-flash-fin-free",
+        "provider": "opencode-free",
+        "tier": "standard_plus",
+        "score": 0.675,
+        "reason": "task=Write a short guide about how to reduce AI response latency in Hermes agent workflows, complexity=high",
+        "fallback_chain": [
+          "ling-3.0-flash-fin-free",
+          "meituan-longcat-2.0-free",
+          "human"
+        ]
+      }
+    },
+    {
+      "step": "protocol_init",
+      "result": {
+        "version": "1.0",
+        "max_messages_per_mission": 12,
+        "max_group_room_turns": 8,
+        "valid_payload_types": [
+          "handoff",
+          "blocker",
+          "revision_request",
+          "clarification_request",
+          "video_request",
+          "hypothesis_update",
+          "escalation",
+          "registry_notice",
+          "proposal",
+          "dedup"
+        ],
+        "status": "ready"
+      }
+    },
+    {
+      "step": "protocol_execution",
+      "result": "Executed 5 agents via protocol"
+    },
+    {
+      "step": "escalation_health",
+      "result": {
+        "output": "\u2713 Escalation: high_factual_error \u2192 triggered=True\n\u2713 System Health: 6 checks, status=healthy",
+        "stderr": ""
+      }
+    }
+  ],
+  "status": "completed",
+  "completed": "2026-09-11T20:32:48.810484+00:00",
+  "agents_used": [
+    "omni-researcher",
+    "strategist",
+    "draft-writer",
+    "editor-qa",
+    "publisher"
+  ]
+}

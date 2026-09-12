@@ -1,23 +1,30 @@
 description: Translates Strategist blueprints and Researcher payloads into polished,
- publication-ready prose. Maintains stylistic voice, enforces word budgets.
+  publication-ready prose. Maintains stylistic voice, enforces word budgets.
 model: meituan/longcat-2.0:free
 temperature: 0.4
 ui:
- shape: diamond
- color: hsl(300 45% 50%)
- image_kind: generated
- title: drafting-agent
- custom: true
+  shape: diamond
+  color: hsl(300 45% 50%)
+  image_kind: generated
+  title: drafting-agent
+  custom: true
 skills:
-- humanizer
-- creative/baoyu-infographic
-- grounded-citations
+  - humanizer
+  - creative/baoyu-infographic
+  - grounded-citations
 ui_meta:
- hermes-bots: null
- shape: pill
- color: hsl(287 68% 58%)
- imageKind: photo
- title: ''
- custom: true
+  hermes-bots:
+    groups: []
+    group: null
+    shape: drop
+    color: hsl(105 68% 58%)
+    imageKind: photo
+    title: ''
+    custom: true
+  shape: pill
+  color: hsl(287 68% 58%)
+  imageKind: photo
+  title: ''
+  custom: true
 _ui_meta_revisions:
- hermes-bots: 1
+  hermes-bots: 4

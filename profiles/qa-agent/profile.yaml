@@ -1,4 +1,4 @@
-description: . Independently verifies drafts against Researcher's dossier and Strategist's
+description: Independently verifies drafts against Researcher's dossier and Strategist's
   brief. Claim-by-claim fact-checking, source-matching.
 model: claude-3-haiku
 temperature: 0.1
@@ -19,10 +19,13 @@ ui_meta:
     imageKind: photo
     title: ''
     custom: true
+    groups: []
+    group: null
   shape: triangle
   color: hsl(328 68% 58%)
   imageKind: photo
   title: ''
   custom: true
 _ui_meta_revisions:
-  hermes-bots: 2
+  hermes-bots: 7
+description_auto: false

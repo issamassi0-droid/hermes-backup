@@ -1,0 +1,8 @@
+{
+  "agent": "distribution-agent",
+  "status": "healthy",
+  "last_init": "2026-09-11T20:32:48.372531+00:00",
+  "init_count": 1,
+  "failures": [],
+  "updated": "2026-09-11T20:32:48.372549+00:00"
+}

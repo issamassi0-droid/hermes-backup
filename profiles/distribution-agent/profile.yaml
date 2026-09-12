@@ -1,23 +1,28 @@
 description: Final gatekeeper and distribution engine. Ingests polished drafts, performs
- final formatting, routes to Obsidian vault by default or deploys to live
+  final formatting, routes to Obsidian vault by default or deploys to live
 model: nemotron-3-ultra-free
 temperature: 0.2
 ui:
- shape: square
- color: hsl(220 50% 45%)
- image_kind: generated
- title: distribution-agent
- custom: true
+  shape: square
+  color: hsl(220 50% 45%)
+  image_kind: generated
+  title: distribution-agent
+  custom: true
 skills:
-- productivity/obsidian-2nd-brain
-- productivity/docx
-- grounded-citations
+  - productivity/obsidian-2nd-brain
+  - productivity/docx
+  - grounded-citations
 ui_meta:
- hermes-bots: null
- shape: circle
- color: hsl(268 68% 58%)
- imageKind: photo
- title: ''
- custom: true
+  hermes-bots:
+    shape: circle
+    color: hsl(52 68% 58%)
+    imageKind: photo
+    title: ''
+    custom: true
+  shape: circle
+  color: hsl(268 68% 58%)
+  imageKind: photo
+  title: ''
+  custom: true
 _ui_meta_revisions:
- hermes-bots: 1
+  hermes-bots: 2

@@ -1,14 +1,20 @@
 description: Create new bots as user like
 description_auto: false
 ui_meta:
-  hermes-bots: null
+  hermes-bots:
+    pinned: true
+    shape: triangle
+    color: hsl(306 68% 58%)
+    imageKind: photo
+    title: Agent Factory
+    custom: true
   shape: blobatar
   imageKind: photo
   title: ''
   created: 1788871521486
   pinned: true
 _ui_meta_revisions:
-  hermes-bots: 4
+  hermes-bots: 5
 ui:
   title: agent-factory
 model: nemotron-3-ultra-free
