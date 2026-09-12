@@ -1,10 +1,22 @@
 # distribution-agent — Tier B (distribution / publish worker)
 # Inherits all defaults from config.base.yaml; overrides below.
+# Uses FreeLLMAPI as primary, opencode-free as fallback.
 
 model:
-  default: nemotron-3-ultra-free
-  provider: opencode-free
-  base_url: https://opencode.ai/zen/v1
+  default: auto
+  provider: FreeLLMAPI
+  api_key: HERMES_FREELMAPI_KEY
+  base_url: http://localhost:3001/v1
+
+custom_providers:
+  - name: FreeLLMAPI
+    base_url: http://localhost:3001/v1
+    key_env: HERMES_FREELMAPI_KEY
+    model: auto
+    models:
+      auto: {}
+      fusion: {}
+    models_discovered: false
 
 agent:
   max_turns: 50

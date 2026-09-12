@@ -1,10 +1,21 @@
 # analytics-agent — Tier B (analytics / metrics worker)
 # Inherits all defaults from config.base.yaml; overrides below.
+# Uses opencode-free (keyless, 70 models, 381ms latency) as primary, FreeLLMAPI as fallback.
 
 model:
   default: nemotron-3-ultra-free
   provider: opencode-free
   base_url: https://opencode.ai/zen/v1
+
+custom_providers:
+  - name: FreeLLMAPI
+    base_url: http://localhost:3001/v1
+    key_env: HERMES_FREELMAPI_KEY
+    model: auto
+    models:
+      auto: {}
+      fusion: {}
+    models_discovered: false
 
 agent:
   max_turns: 100

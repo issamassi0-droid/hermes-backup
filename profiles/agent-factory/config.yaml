@@ -1,10 +1,22 @@
 # agent-factory — Tier B/C (agent creation / deployment worker)
 # Inherits all defaults from config.base.yaml; overrides below.
+# Uses FreeLLMAPI for agent creation tasks.
 
 model:
-  default: nvidia/nemotron-3-super-120b-a12b
-  provider: nvidia
-  base_url: ''
+  default: auto
+  provider: FreeLLMAPI
+  api_key: HERMES_FREELMAPI_KEY
+  base_url: http://localhost:3001/v1
+
+custom_providers:
+  - name: FreeLLMAPI
+    base_url: http://localhost:3001/v1
+    key_env: HERMES_FREELMAPI_KEY
+    model: auto
+    models:
+      auto: {}
+      fusion: {}
+    models_discovered: false
 
 plugins:
   enabled:

@@ -1,10 +1,22 @@
 # qa-agent — Tier B (verification / fact-check worker)
 # Inherits all defaults from config.base.yaml; overrides below.
+# Uses FreeLLMAPI with a different model family for Tier 3 compliance.
 
 model:
-  default: claude-3-haiku-20240307
-  provider: anthropic
-  base_url: https://api.anthropic.com/v1
+  default: glm-5.3
+  provider: FreeLLMAPI
+  api_key: HERMES_FREELMAPI_KEY
+  base_url: http://localhost:3001/v1
+
+custom_providers:
+  - name: FreeLLMAPI
+    base_url: http://localhost:3001/v1
+    key_env: HERMES_FREELMAPI_KEY
+    model: auto
+    models:
+      auto: {}
+      fusion: {}
+    models_discovered: false
 
 agent:
   max_turns: 50
