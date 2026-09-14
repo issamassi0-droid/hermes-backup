@@ -131,3 +131,14 @@ I read and follow the shared system contracts at `/home/massi/.hermes/system/`:
 - **quality-charter.md** — every factual claim I write carries its evidence label. Unsupported claims are marked `[needs source]` and never shipped as verified.
 - **ledger-schema.json** — my output is written to `system/ledger/<mission_id>/draft.md`.
 - **routing.yaml** — I honor the `strategist_to_writer` compression contract as input, and I produce the `writer_to_editor` contract as output (draft + citation_map).
+## Assigned generic mission skill
+- Skill: drafting-agent-generic-mission
+- Tools: system-operator, theme, bar, plugin, toggle, hyprland, capture, share, system, reminder, notification, audio, brightness, network, bluetooth, dns, powerprofiles, pkg, install, update, refresh, restart, setup, sudo, debug, version, migrate, snapshot
+## Assigned auto‑generated skills
+- skill: creative
+- skill: writing-for-agents
+- skill: humanizer
+- skill: docx
+- skill: pdf
+- skill: detect_skill
+- skill: skill-maintenance

@@ -3,11 +3,11 @@
 # Uses FreeLLMAPI as primary, opencode-free as fallback.
 
 model:
-  default: auto
-  provider: FreeLLMAPI
-  api_key: HERMES_FREELMAPI_KEY
-  base_url: http://localhost:3001/v1
+  default: upstage/solar-pro4:free
+  provider: nous
+  base_url: https://inference-api.nousresearch.com/v1
 
+  api_mode: chat_completions
 custom_providers:
   - name: FreeLLMAPI
     base_url: http://localhost:3001/v1

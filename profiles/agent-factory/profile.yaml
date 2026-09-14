@@ -2,7 +2,7 @@ description: Create new bots as user like
 description_auto: false
 ui_meta:
   hermes-bots:
-    pinned: true
+    pinned: false
     shape: triangle
     color: hsl(306 68% 58%)
     imageKind: photo
@@ -14,7 +14,7 @@ ui_meta:
   created: 1788871521486
   pinned: true
 _ui_meta_revisions:
-  hermes-bots: 5
+  hermes-bots: 6
 ui:
   title: agent-factory
 model: nemotron-3-ultra-free

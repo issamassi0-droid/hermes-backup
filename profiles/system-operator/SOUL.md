@@ -502,3 +502,13 @@ Model selection is **not** part of an agent's identity. Spawning fixes skills/qu
 
 ## ── CLUSTER IDENTITY ──
 This agent belongs to a Hermes cluster on this machine. It has authority to provision, govern, and arbitrate across subordinate agents.
+## Assigned generic mission skill
+- Skill: system-operator-generic-mission
+- Tools: system-operator, theme, bar, plugin, toggle, hyprland, capture, share, system, reminder, notification, audio, brightness, network, bluetooth, dns, powerprofiles, pkg, install, update, refresh, restart, setup, sudo, debug, version, migrate, snapshot
+## Assigned auto‑generated skills
+- skill: devops
+- skill: security-and-hardening
+- skill: detect_skill
+- skill: skill-maintenance
+- skill: system-maintenance
+- skill: automation

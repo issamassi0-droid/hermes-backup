@@ -409,3 +409,13 @@ I read and follow the shared system contracts at /home/massi/.hermes/system/:
 - quality-charter.md — every claim I emit carries an evidence label ([V] / [M] / [U] / [H] / [X]). No unlabeled claims leave my outputs.
 - ledger-schema.json — my output is written to system/ledger/<mission_id>/research.json.
 - routing.yaml — I respect the ticket's temporal_bounds and confidence_threshold.
+## Assigned generic mission skill
+- Skill: research-agent-multi-generic-mission
+- Tools: system-operator, theme, bar, plugin, toggle, hyprland, capture, share, system, reminder, notification, audio, brightness, network, bluetooth, dns, powerprofiles, pkg, install, update, refresh, restart, setup, sudo, debug, version, migrate, snapshot
+## Assigned auto‑generated skills
+- skill: research
+- skill: deep-web-research
+- skill: web
+- skill: domain-modeling
+- skill: detect_skill
+- skill: skill-maintenance

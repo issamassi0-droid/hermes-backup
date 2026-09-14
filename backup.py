@@ -3,6 +3,15 @@
 backup.py — Create a backup of the Cabinet-Office system.
 Copies all essential files from ~/.hermes to ~/.hermes-backup.
 
+What gets backed up:
+  - /shared/agent-registry.md (cluster-wide single source of truth)
+  - Top-level registry.json
+  - Per-profile: SOUL.md, profile.yaml, config.yaml
+  - Per-profile skills/*/SKILL.md
+  - System contracts (system/*.md, system/*.json)
+  - System scripts (system/scripts/*.py)
+  - Ledger (system/ledger/**/*.json)
+
 Usage:
     python3 backup.py    # create backup
 """
@@ -19,39 +28,59 @@ def get_backup_files():
     """Get list of files to backup"""
     files = []
 
-    # System contracts
+    # 1. Shared cluster-wide files
+    shared_dir = os.path.join(SOURCE_BASE, "shared")
+    if os.path.exists(shared_dir):
+        for f in os.listdir(shared_dir):
+            if f.endswith(('.md', '.json')):
+                files.append(f"shared/{f}")
+
+    # 2. Top-level registry.json
+    top_registry = os.path.join(SOURCE_BASE, "registry.json")
+    if os.path.exists(top_registry):
+        files.append("registry.json")
+
+    # 3. Per-profile files
+    profiles_dir = os.path.join(SOURCE_BASE, "profiles")
+    if os.path.exists(profiles_dir):
+        for folder in sorted(os.listdir(profiles_dir)):
+            if folder.startswith('.'):
+                continue
+            profile_dir = os.path.join(profiles_dir, folder)
+            if not os.path.isdir(profile_dir):
+                continue
+
+            # Profile-level files
+            for fname in ["SOUL.md", "profile.yaml", "config.yaml"]:
+                fpath = os.path.join(profile_dir, fname)
+                if os.path.exists(fpath):
+                    files.append(f"profiles/{folder}/{fname}")
+
+            # Skills (any SKILL.md under skills/)
+            skills_dir = os.path.join(profile_dir, "skills")
+            if os.path.exists(skills_dir):
+                for root, dirs, filenames in os.walk(skills_dir):
+                    for f in filenames:
+                        if f.endswith('.md'):
+                            full_path = os.path.join(root, f)
+                            rel_path = os.path.relpath(full_path, SOURCE_BASE)
+                            files.append(rel_path)
+
+    # 4. System contracts
     system_dir = os.path.join(SOURCE_BASE, "system")
     if os.path.exists(system_dir):
         for f in os.listdir(system_dir):
             if f.endswith(('.md', '.json', '.yaml', '.yml')):
                 files.append(f"system/{f}")
 
-    # System scripts
+    # 5. System scripts
     scripts_dir = os.path.join(SOURCE_BASE, "system/scripts")
     if os.path.exists(scripts_dir):
         for f in os.listdir(scripts_dir):
             if f.endswith('.py'):
                 files.append(f"system/scripts/{f}")
 
-    # Profile SOUL.md, profile.yaml, and config.yaml
-    profiles_dir = os.path.join(SOURCE_BASE, "profiles")
-    if os.path.exists(profiles_dir):
-        for folder in os.listdir(profiles_dir):
-            if folder.startswith('.'):
-                continue
-            profile_dir = os.path.join(profiles_dir, folder)
-            if os.path.isdir(profile_dir):
-                soul = os.path.join(profile_dir, "SOUL.md")
-                profile = os.path.join(profile_dir, "profile.yaml")
-                config = os.path.join(profile_dir, "config.yaml")
-                if os.path.exists(soul):
-                    files.append(f"profiles/{folder}/SOUL.md")
-                if os.path.exists(profile):
-                    files.append(f"profiles/{folder}/profile.yaml")
-                if os.path.exists(config):
-                    files.append(f"profiles/{folder}/config.yaml")
-
-    # Ledger directory (JSON only)
+    # 6. Ledger directory (JSON only)
     ledger_dir = os.path.join(SOURCE_BASE, "system/ledger")
     if os.path.exists(ledger_dir):
         for root, dirs, filenames in os.walk(ledger_dir):

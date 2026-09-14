@@ -1,14 +1,29 @@
-# orchestrator-agent — Tier A (governor / entry point)
-# Inherits all defaults from config.base.yaml; overrides below.
-# Memory backend: hindsight (shared hindsight provider for Tier A).
-# Uses FreeLLMAPI as primary, opencode-free as fallback.
-
 model:
-  default: auto
-  provider: FreeLLMAPI
-  api_key: HERMES_FREELMAPI_KEY
-  base_url: http://localhost:3001/v1
-
+  default: meituan/longcat-2.0:free
+  provider: nous
+  base_url: https://inference-api.nousresearch.com/v1
+  api_mode: chat_completions
+agent:
+  max_turns: 150
+web:
+  backend: ddgs
+browser:
+  backend: browser-use
+display:
+  skin: default
+  enabled: false
+  tool_progress: all
+memory:
+  provider: hindsight
+plugins:
+  enabled:
+    - deer-flow
+    - open-second-brain
+    - superpowers
+  disabled: []
+computer_use:
+  backend: cua
+_config_version: 44
 custom_providers:
   - name: FreeLLMAPI
     base_url: http://localhost:3001/v1
@@ -18,17 +33,97 @@ custom_providers:
       auto: {}
       fusion: {}
     models_discovered: false
+image_gen:
+  provider: openai-codex
+  model: gpt-image-2-medium
+platform_toolsets:
+  cli:
+    - browser
+    - clarify
+    - code_execution
+    - computer_use
+    - connections
+    - cronjob
+    - delegation
+    - file
+    - image_gen
+    - memory
+    - session_search
+    - skills
+    - terminal
+    - todo
+    - tts
+    - vision
+    - web
+known_plugin_toolsets:
+  cli:
+    - a2a
+    - spotify
+known_builtin_toolsets:
+  cli:
+    - browser
+    - clarify
+    - code_execution
+    - computer_use
+    - connections
+    - context_engine
+    - cronjob
+    - delegation
+    - discord
+    - discord_admin
+    - file
+    - homeassistant
+    - image_gen
+    - kanban
+    - memory
+    - session_search
+    - skills
+    - spotify
+    - stt
+    - terminal
+    - todo
+    - tts
+    - video
+    - video_gen
+    - vision
+    - web
+    - x_search
+    - yuanbao
 
-display:
-  skin: default
-  enabled: false
+# ── Security ──────────────────────────────────────────────────────────
+# Secret redaction is ON by default — strings that look like API keys,
+# tokens, and passwords are masked in tool output, logs, and chat
+# responses before the model or user ever sees them. Set redact_secrets
+# to false to disable (e.g. when developing the redactor itself).
+# tirith pre-exec scanning is enabled by default when the tirith binary
+# is available. Configure via security.tirith_* keys or env vars
+# (TIRITH_ENABLED, TIRITH_BIN, TIRITH_TIMEOUT, TIRITH_FAIL_OPEN).
+#
+# security:
+#   redact_secrets: true
+#   tirith_enabled: true
+#   tirith_path: "tirith"
+#   tirith_timeout: 5
+#   tirith_fail_open: true
 
-plugins:
-  enabled:
-    - deer-flow
-    - open-second-brain
-    - superpowers
-  disabled: []
-
-memory:
-  provider: hindsight
+# ── Fallback Model ────────────────────────────────────────────────────
+# Automatic provider failover when primary is unavailable.
+# Uncomment and configure to enable. Triggers on rate limits (429),
+# overload (529), service errors (503), or connection failures.
+#
+# Supported providers:
+#   openrouter   (OPENROUTER_API_KEY)  — routes to any model
+#   openai-codex (OAuth — hermes auth) — OpenAI Codex
+#   nous         (OAuth — hermes auth) — Nous Portal
+#   zai          (ZAI_API_KEY)         — Z.AI / GLM
+#   kimi-coding  (KIMI_API_KEY)        — Kimi / Moonshot
+#   kimi-coding-cn (KIMI_CN_API_KEY)   — Kimi / Moonshot (China)
+#   minimax      (MINIMAX_API_KEY)     — MiniMax
+#   minimax-cn   (MINIMAX_CN_API_KEY)  — MiniMax (China)
+#   bedrock      (AWS IAM / boto3)     — AWS Bedrock (Converse API)
+#
+# For custom OpenAI-compatible endpoints, add base_url and key_env.
+#
+# fallback_model:
+#   provider: openrouter
+#   model: anthropic/claude-sonnet-4

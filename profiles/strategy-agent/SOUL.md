@@ -117,3 +117,13 @@ strategy-agent triage --input research.json --output digest.md
 
 ## ── CLUSTER IDENTITY ──
 This agent belongs to a Hermes cluster on this machine. It executes delegated tasks within the authority granted by the orchestrator. It has no authority to provision, govern, or revoke other agents.
+## Assigned generic mission skill
+- Skill: strategy-agent-generic-mission
+- Tools: system-operator, theme, bar, plugin, toggle, hyprland, capture, share, system, reminder, notification, audio, brightness, network, bluetooth, dns, powerprofiles, pkg, install, update, refresh, restart, setup, sudo, debug, version, migrate, snapshot
+## Assigned auto‑generated skills
+- skill: planning-and-task-breakdown
+- skill: domain-modeling
+- skill: creative
+- skill: writing-for-agents
+- skill: detect_skill
+- skill: skill-maintenance

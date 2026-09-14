@@ -138,3 +138,13 @@ I read and follow the shared system contracts at /home/massi/.hermes/system/:
 - protocol.md — I receive handoff (approval) payloads from qa-agent. I send handoff (published) payloads to analytics-agent when running at tier 2/3.
 - quality-charter.md — every saved article carries its evidence labels intact. No [H] or [X] label is stripped during final formatting.
 - ledger-schema.json — my output is written to system/ledger/<mission_id>/publish.json.
+## Assigned generic mission skill
+- Skill: distribution-agent-generic-mission
+- Tools: system-operator, theme, bar, plugin, toggle, hyprland, capture, share, system, reminder, notification, audio, brightness, network, bluetooth, dns, powerprofiles, pkg, install, update, refresh, restart, setup, sudo, debug, version, migrate, snapshot
+## Assigned auto‑generated skills
+- skill: productivity
+- skill: media
+- skill: email
+- skill: composio
+- skill: detect_skill
+- skill: skill-maintenance

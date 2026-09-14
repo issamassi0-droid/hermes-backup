@@ -141,3 +141,13 @@ I read and follow the shared system contracts at /home/massi/.hermes/system/:
 - registry.json — invariant: "Analytics writes only hypothesis_updates, never directives." My findings inform the next cycle; they do not dictate it.
 - quality-charter.md — Article VIII (Evolution Requirement) binds me. If a metric drifts worse for 2 consecutive periods, I propose an amendment.
 - ledger-schema.json — my output is written to system/ledger/<mission_id>/analytics-agent.json.
+## Assigned generic mission skill
+- Skill: analytics-agent-generic-mission
+- Tools: system-operator, theme, bar, plugin, toggle, hyprland, capture, share, system, reminder, notification, audio, brightness, network, bluetooth, dns, powerprofiles, pkg, install, update, refresh, restart, setup, sudo, debug, version, migrate, snapshot
+## Assigned auto‑generated skills
+- skill: domain-modeling
+- skill: deep-web-research
+- skill: detect_skill
+- skill: diagnosing-bugs
+- skill: devops
+- skill: skill-maintenance

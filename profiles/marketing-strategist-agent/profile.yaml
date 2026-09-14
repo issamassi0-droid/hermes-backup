@@ -1,0 +1,25 @@
+description: Marketing Strategist — specialized strategic analysis and planning agent.
+  Produces positioning, channel allocation, audience prioritization, competitive response,
+  budget logic, and go-to-market sequencing with explicit reasoning and no-blindspot
+  protocol.
+model: nemotron-3-ultra-free
+temperature: 0.2
+ui:
+  shape: hexagon
+  color: hsl(280 60% 55%)
+  image_kind: generated
+  title: marketing-strategist-agent
+  custom: true
+skills:
+  - deep-web-research
+ui_meta:
+  hermes-bots:
+    groups: []
+    group: null
+    shape: hexagon
+    color: hsl(280 68% 58%)
+    imageKind: photo
+    title: Marketing Strategist
+    custom: true
+_ui_meta_revisions:
+  hermes-bots: 3

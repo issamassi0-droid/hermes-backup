@@ -1,0 +1,9 @@
+ui_meta:
+  hermes-bots:
+    shape: drop
+    color: hsl(181 68% 58%)
+    imageKind: photo
+    title: ''
+    custom: true
+_ui_meta_revisions:
+  hermes-bots: 1

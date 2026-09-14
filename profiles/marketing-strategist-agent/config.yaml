@@ -1,0 +1,88 @@
+model:
+  default: nemotron-3-ultra-free
+  provider: opencode-free
+  base_url: https://opencode.ai/zen/v1
+  api_mode: chat_completions
+agent:
+  max_turns: 150
+web:
+  backend: ddgs
+browser:
+  backend: browser-use
+display:
+  skin: default
+  enabled: false
+  tool_progress: all
+memory:
+  provider: hindsight
+plugins:
+  enabled: []
+  disabled: []
+computer_use:
+  backend: cua
+_config_version: 44
+custom_providers:
+  - name: FreeLLMAPI
+    base_url: http://localhost:3001/v1
+    key_env: HERMES_FREELMAPI_KEY
+    model: auto
+    models:
+      auto: {}
+      fusion: {}
+    models_discovered: false
+image_gen:
+  provider: openai-codex
+  model: gpt-image-2-medium
+platform_toolsets:
+  cli:
+    - browser
+    - clarify
+    - code_execution
+    - computer_use
+    - connections
+    - cronjob
+    - delegation
+    - file
+    - image_gen
+    - memory
+    - session_search
+    - skills
+    - terminal
+    - todo
+    - tts
+    - vision
+    - web
+known_plugin_toolsets:
+  cli:
+    - a2a
+    - spotify
+known_builtin_toolsets:
+  cli:
+    - browser
+    - clarify
+    - code_execution
+    - computer_use
+    - connections
+    - context_engine
+    - cronjob
+    - delegation
+    - discord
+    - discord_admin
+    - file
+    - homeassistant
+    - image_gen
+    - kanban
+    - memory
+    - session_search
+    - skills
+    - spotify
+    - stt
+    - terminal
+    - todo
+    - tts
+    - video
+    - video_gen
+    - vision
+    - web
+    - x_search
+    - yuanbao
