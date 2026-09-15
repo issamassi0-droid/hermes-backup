@@ -406,6 +406,7 @@ class DynamicModelMonitor:
         self.providers_config_path = pathlib.Path(providers_config_path)
         self.scan_interval = scan_interval
         self.providers = self._load_providers()
+        self._scan_provider_ids = set(self.providers.keys())  # قائمة بيضاء — فقط من providers.yaml
         self.store = state_store or SharedStateStore()
 
         self._stop_event = threading.Event()
@@ -535,11 +536,15 @@ class DynamicModelMonitor:
     # الفحص الدوري — لا يطمس الوسم الحي
     # -----------------------------------------------------------------
     def _probe_model_speed(self, provider_id: str, provider: Dict[str, Any], model: str) -> Tuple[str, float]:
-        """فحص سرعة الاتصال بنموذج محدد. يُرجع (status, latency_ms)."""
+        """
+        فحص سرعة الاتصال بنموذج محدد.
+        يُرجع (status, latency_ms).
+        الحالة الممكنة: ok, rate_limit, auth_failed, timeout, http_XXX, no_key, error
+        """
         if requests is None:
             return ("unknown", 99999)
         api_key = os.environ.get(provider.get("key_env", ""), "")
-        if not api_key:
+        if not api_key or api_key == "***":
             return ("no_key", 99999)
         url = provider["base_url"].rstrip("/") + "/chat/completions"
         try:
@@ -557,6 +562,8 @@ class DynamicModelMonitor:
                 return ("rate_limit", elapsed)
             elif resp.status_code in (401, 403):
                 return ("auth_failed", elapsed)
+            elif resp.status_code == 503:
+                return ("overloaded", elapsed)
             else:
                 return (f"http_{resp.status_code}", elapsed)
         except requests.exceptions.Timeout:
@@ -576,63 +583,44 @@ class DynamicModelMonitor:
 
     def _ensure_providers_fresh(self) -> None:
         """
-        إعادة اكتشاف المزودين ديناميكياً قبل كل مهمة.
-        يدمج المزودين الديناميكيين مع providers.yaml — لا يستبدلهم.
+        لا يضيف نماذج من discover_providers() — providers.yaml هو المصدر الوحيد.
+        يكتفي بطباعة عدد المزودين الحاليين للتشخيص.
         """
-        fresh = self.discover_providers()
-        if fresh:
-            # دمج: المزودين الديناميكيين + المعرفون في providers.yaml
-            # الأولوية للتعريف من providers.yaml (يحتوي على نماذج وأسماء  canonical)
-            merged = dict(self.providers)
-            for pid, pdata in fresh.items():
-                if pid in merged:
-                    # إضافة النماذج الجديدة التي لم تكن في providers.yaml
-                    existing_models = set(merged[pid].get("models", []))
-                    for m in pdata.get("models", []):
-                        if m not in existing_models:
-                            merged[pid].setdefault("models", []).append(m)
-                else:
-                    merged[pid] = pdata
-            if merged != self.providers:
-                self.providers = merged
-                print(f"  🔄 [model-monitor] تحديث ديناميكي: {len(self.providers)} مزود")
+        print(f"  📄 [model-monitor] {len(self.providers)} مزود من providers.yaml")
 
     def _scan_once(self) -> None:
-        """الفحص المتوازي — يدمج النتائج مع الحالة المشتركة دون طمس الوسم الحي."""
+        """الفحص المتوازي — يدمج النتائج مع الحالة المشتركة دون طمس الوسم الحي.
+        يفحص فقط النماذج المُعرّفة في self.providers (providers.yaml) — لا النماذج المكتشفة ديناميكياً."""
         results: Dict[str, str] = {}
         with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
             jobs = []
+            # فحص النماذج المُعرّفة فقط — لا النماذج من discover_providers()
             for provider_id, provider in self.providers.items():
-                jobs.append((
-                    pool.submit(self._rank_models_for_provider, provider_id, provider),
-                    provider_id
-                ))
-            for future, provider_id in jobs:
+                for model in provider.get("models", []):
+                    jobs.append((
+                        pool.submit(self._probe_model_speed, provider_id, provider, model),
+                        f"{provider_id}/{model}"
+                    ))
+            for future, key in jobs:
                 try:
-                    ranked = future.result()
-                    for model, status, latency in ranked:
-                        key = f"{provider_id}/{model}"
-                        if status == "ok":
-                            results[key] = "available"
-                        else:
-                            results[key] = status
+                    status, _ = future.result()
+                    results[key] = status
                 except Exception:
-                    # إذا فشل الفحص بالكامل، لا نضيف شيئًا
                     pass
 
         def _merge(data: Dict[str, Any]) -> None:
             pairs = data.setdefault("pairs", {})
             for key, new_state in results.items():
                 existing = pairs.get(key)
-                # إذا كان الوسم حيًأ حديثًا، لا تطمسه بنتيجة الفحص
                 if existing and existing.get("source") == "live":
                     if not SharedStateStore._is_expired(
                         existing.get("marked_at"), LIVE_MARK_TTL_SECONDS
                     ):
                         continue
-                # وسوم circuit breaker القديمة تُترك — ستُمسح عند انتهاء صلاحيتها
-                if new_state == "available":
+                if new_state == "ok":
                     pairs.pop(key, None)
+                elif new_state == "no_key":
+                    pairs.pop(key, None)  # لا يوجد مفتاح — لا نوسم
                 else:
                     pairs[key] = {
                         "state": new_state,
@@ -687,10 +675,11 @@ class DynamicModelMonitor:
         return keys
 
     def bind_agent(self, agent_id: str,
-                   exclude: Optional[set] = None) -> Optional[Tuple[str, str]]:
+                   exclude: Optional[set] = None,
+                   live_probe: bool = True) -> Optional[Tuple[str, str]]:
         """
         يبحث عن أول زوج نشط مع استنزاف كل النماذج داخل المزود قبل الانتقال.
-        الأولوية: استنزاف كل نماذج المزود الحالي → الانتقال للمزود التالي.
+        live_probe: True = يُحاول الاتصال مباشرة قبل الوسم (أكثر دقة، أبطأ).
         """
         exclude = exclude or set()
         exclude_keys = {f"{p}/{m}" for (p, m) in exclude}
@@ -715,20 +704,38 @@ class DynamicModelMonitor:
                 return
 
             used = {v for k, v in assignments.items() if k != agent_id}
-            
-            # استنزاف كل النماذج داخل كل مزود قبل الانتقال
+
             for provider_id, provider in self.providers.items():
                 for model in provider.get("models", []):
                     key = f"{provider_id}/{model}"
                     if key in exclude_keys or key in used:
                         continue
+
                     state_entry = pairs.get(key)
+
                     if state_entry is None:
+                        # لم يُوسم — حاول الاتصال إذا live_probe=True
+                        if live_probe:
+                            status, _ = self._probe_model_speed(provider_id, provider, model)
+                            if status == "ok":
+                                chosen = key
+                                break
+                            else:
+                                pairs[key] = {
+                                    "state": status,
+                                    "marked_at": datetime.now(timezone.utc).isoformat(),
+                                    "source": "live",
+                                }
+                                continue
+                        else:
+                            chosen = key
+                            break
+                    elif state_entry.get("state") == "available":
                         chosen = key
                         break
-                    if state_entry.get("state") == "available":
-                        chosen = key
-                        break
+                    else:
+                        # أي حالة أخرى (no_key, error, exhausted) — تخطي
+                        continue
                 if chosen:
                     break
 
