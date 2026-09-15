@@ -486,41 +486,11 @@ class DynamicModelMonitor:
 
     def _load_providers(self) -> Dict[str, Dict[str, Any]]:
         """
-        اكتشاف ديناميكي للمزودين من مصادر متعددة.
-        الأفضلية: discover_providers() (آلية Hermes) ← providers.yaml ← متغيرات البيئة
+        قراءة المزودين من providers.yaml أولاً.
+        fallback: discover_providers() إذا فشل القراءة أو لم يوجد مفتاح.
         """
-        # حاول الاكتشاف عبر آلية Hermes أولاً
-        providers = self.discover_providers()
-        if providers:
-            print(f"  🔎 [model-monitor] اكتُشف {len(providers)} مزود عبر آلية Hermes: {list(providers.keys())}")
-            return providers
+        providers: Dict[str, Dict[str, Any]] = {}
 
-        # fallback: providers.yaml + متغيرات البيئة
-        print("  ⚠️ [model-monitor] فشل الاكتشاف عبر Hermes — استخدام providers.yaml")
-        known_env_keys = {
-            "OPENROUTER_API_KEY": ("openrouter", "https://openrouter.ai/api/v1",
-                                   ["google/gemini-3.5-flash", "anthropic/claude-sonnet-4-6",
-                                    "meta-llama/llama-4-maverick"]),
-            "ANTHROPIC_API_KEY": ("anthropic", "https://api.anthropic.com/v1",
-                                  ["claude-sonnet-4-6", "claude-opus-4-7"]),
-            "OPENAI_API_KEY": ("openai", "https://api.openai.com/v1",
-                               ["gpt-4o", "gpt-5"]),
-            "GOOGLE_API_KEY": ("google", "https://generativelanguage.googleapis.com/v1beta",
-                              ["gemini-3.5-flash", "gemini-3.6-flash"]),
-            "DEEPSEEK_API_KEY": ("deepseek", "https://api.deepseek.com/v1",
-                                 ["deepseek-v4-flash-0731", "deepseek-chat"]),
-            "NVIDIA_API_KEY": ("nvidia", "https://integrate.api.nvidia.com/v1",
-                               ["nemotron-3-ultra-550b", "llama-4-maverick"]),
-            "NOUS_API_KEY": ("nous", "https://inference-api.nousresearch.com/v1",
-                             ["hermes-4-70b", "hermes-4-405b"]),
-            "KIMI_API_KEY": ("kimi", "https://api.moonshot.cn/v1",
-                             ["kimi-k3", "kimi-k2.7-code"]),
-            "HERMES_CUSTOM_LOCALHOST_3001_API_KEY": ("local", "http://localhost:3001/v1",
-                                                     ["auto", "deepseek-v4-flash-0731"]),
-        }
-
-
-        # المصدر 1: providers.yaml
         if self.providers_config_path.is_file() and yaml is not None:
             try:
                 raw = yaml.safe_load(self.providers_config_path.read_text()) or {}
@@ -532,113 +502,100 @@ class DynamicModelMonitor:
                             "key_env": entry.get("key_env", ""),
                             "models": entry.get("models", []),
                         }
+                print(f"  📄 [model-monitor] قُرأ {len(providers)} مزود من providers.yaml")
             except Exception as e:
                 print(f"  ⚠️ [model-monitor] فشل قراءة providers.yaml: {e}")
 
-        # المصدر 2: config.yaml
-        try:
-            config_path = pathlib.Path(os.path.expanduser("~/.hermes/config.yaml"))
-            if config_path.is_file() and yaml is not None:
-                config = yaml.safe_load(config_path.read_text()) or {}
-                # النموذج الافتراضي
-                model_cfg = config.get("model", {})
-                default_provider = model_cfg.get("provider", "")
-                if default_provider and default_provider not in providers:
-                    # ابحث عن base_url في custom_providers
-                    for cp in config.get("custom_providers", []):
-                        if cp.get("name") == default_provider or cp.get("id") == default_provider:
-                            providers[default_provider] = {
-                                "base_url": cp.get("base_url", ""),
-                                "key_env": cp.get("key_env", ""),
-                                "models": [model_cfg.get("default", "auto")],
-                            }
-                            break
-        except Exception as e:
-            print(f"  ⚠️ [model-monitor] فشل قراءة config.yaml: {e}")
+        # إضافة FreeLLMAPI / local صراحة إذا كان المفتاح موجوداً
+        freellm_key = os.environ.get("HERMES_FREELMAPI_KEY", "")
+        if freellm_key:
+            extra = {
+                "FreeLLMAPI": ["auto", "gpt-oss-120b", "deepseek-v4-flash-0731",
+                               "nemotron-3-ultra-free", "nemotron-3-super-120b-a12b",
+                               "nemotron-3.5-lightning-30b-a3b", "gpt-5",
+                               "glm-5.3", "deepseek-r1", "gemini-3.6-flash"],
+                "local": ["auto", "gpt-oss-120b", "nemotron-3-super-120b-a12b"],
+            }
+            for pid, models in extra.items():
+                if pid not in providers:
+                    providers[pid] = {
+                        "base_url": "http://localhost:3001/v1",
+                        "key_env": "HERMES_FREELMAPI_KEY",
+                        "models": models,
+                    }
 
-        # المصدر 3: profile.yaml لكل وكيل
-        try:
-            profiles_root = pathlib.Path(os.path.expanduser("~/.hermes/profiles"))
-            if profiles_root.is_dir():
-                for profile_dir in profiles_root.iterdir():
-                    if not profile_dir.is_dir():
-                        continue
-                    profile_file = profile_dir / "profile.yaml"
-                    if not profile_file.is_file():
-                        continue
-                    try:
-                        pdata = yaml.safe_load(profile_file.read_text()) or {}
-                        pmodel = pdata.get("model", {})
-                        provider = pmodel.get("provider", "")
-                        model_name = pmodel.get("model", pmodel.get("default", ""))
-                        if provider and model_name:
-                            pid = provider if provider not in providers else f"{provider}_{profile_dir.name}"
-                            if pid not in providers:
-                                providers[pid] = {
-                                    "base_url": pmodel.get("base_url", ""),
-                                    "key_env": pmodel.get("key_env", ""),
-                                    "models": [model_name],
-                                }
-                    except Exception:
-                        pass
-        except Exception as e:
-            print(f"  ⚠️ [model-monitor] فشل قراءة profiles: {e}")
+        if providers:
+            return providers
 
-        # المصدر 4: متغيرات البيئة المعروفة
-        for env_key, (pid, base_url, models) in known_env_keys.items():
-            if os.environ.get(env_key) and pid not in providers:
-                providers[pid] = {
-                    "base_url": base_url,
-                    "key_env": env_key,
-                    "models": models,
-                }
-
-        if not providers:
-            print("  ⚠️ [model-monitor] لم يُكتشف أي مزود — تأكد من providers.yaml أو متغيرات البيئة")
-
-        print(f"  🔎 [model-monitor] اكتُشف {len(providers)} مزود: {list(providers.keys())}")
-        return providers
+        # fallback أخير
+        print("  ⚠️ [model-monitor] لا يوجد مزود في providers.yaml — استخدام discover_providers()")
+        return self.discover_providers()
 
     # -----------------------------------------------------------------
     # الفحص الدوري — لا يطمس الوسم الحي
     # -----------------------------------------------------------------
-    def _probe_model(self, provider_id: str, provider: Dict[str, Any], model: str) -> str:
+    def _probe_model_speed(self, provider_id: str, provider: Dict[str, Any], model: str) -> Tuple[str, float]:
+        """فحص سرعة الاتصال بنموذج محدد. يُرجع (status, latency_ms)."""
         if requests is None:
-            return "connection_failed"
+            return ("unknown", 99999)
         api_key = os.environ.get(provider.get("key_env", ""), "")
         if not api_key:
-            return "auth_failed"
+            return ("no_key", 99999)
         url = provider["base_url"].rstrip("/") + "/chat/completions"
         try:
+            start = time.time()
             resp = requests.post(
                 url,
-                headers={"Authorization": f"Bearer {api_key}"},
-                json={"model": model, "messages": [{"role": "user", "content": "ping"}],
-                      "max_tokens": 1},
-                timeout=PROBE_TIMEOUT_SECONDS,
+                headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+                json={"model": model, "messages": [{"role": "user", "content": "ping"}], "max_tokens": 1},
+                timeout=10,
             )
-        except requests.exceptions.RequestException:
-            return "connection_failed"
-        if resp.status_code == 200:
-            return "available"
-        if resp.status_code == 429:
-            return "quota_exhausted"
-        if resp.status_code in (401, 403):
-            return "auth_failed"
-        return "connection_failed"
+            elapsed = (time.time() - start) * 1000
+            if resp.status_code == 200:
+                return ("ok", elapsed)
+            elif resp.status_code == 429:
+                return ("rate_limit", elapsed)
+            elif resp.status_code in (401, 403):
+                return ("auth_failed", elapsed)
+            else:
+                return (f"http_{resp.status_code}", elapsed)
+        except requests.exceptions.Timeout:
+            return ("timeout", 10000)
+        except Exception:
+            return ("error", 99999)
+
+    def _rank_models_for_provider(self, provider_id: str, provider: Dict[str, Any]) -> List[Tuple[str, str, float]]:
+        """فحص كل النماذج داخل مزود وإرجاعها مرتبة حسب السرعة."""
+        models = provider.get("models", [])
+        results = []
+        for model in models:
+            status, latency = self._probe_model_speed(provider_id, provider, model)
+            results.append((model, status, latency))
+        results.sort(key=lambda x: (0 if x[1] == "ok" else 1, x[2]))
+        return results
 
     def _ensure_providers_fresh(self) -> None:
         """
         إعادة اكتشاف المزودين ديناميكياً قبل كل مهمة.
-        يضمن ظهور أي مزود جديد تم تفعيله بدون restart.
+        يدمج المزودين الديناميكيين مع providers.yaml — لا يستبدلهم.
         """
         fresh = self.discover_providers()
-        if fresh and fresh != self.providers:
-            new_count = len(fresh)
-            old_count = len(self.providers)
-            if new_count != old_count or set(fresh.keys()) != set(self.providers.keys()):
-                print(f"  🔄 [model-monitor] تحديث ديناميكي: {old_count} → {new_count} مزود")
-                self.providers = fresh
+        if fresh:
+            # دمج: المزودين الديناميكيين + المعرفون في providers.yaml
+            # الأولوية للتعريف من providers.yaml (يحتوي على نماذج وأسماء  canonical)
+            merged = dict(self.providers)
+            for pid, pdata in fresh.items():
+                if pid in merged:
+                    # إضافة النماذج الجديدة التي لم تكن في providers.yaml
+                    existing_models = set(merged[pid].get("models", []))
+                    for m in pdata.get("models", []):
+                        if m not in existing_models:
+                            merged[pid].setdefault("models", []).append(m)
+                else:
+                    merged[pid] = pdata
+            if merged != self.providers:
+                self.providers = merged
+                print(f"  🔄 [model-monitor] تحديث ديناميكي: {len(self.providers)} مزود")
 
     def _scan_once(self) -> None:
         """الفحص المتوازي — يدمج النتائج مع الحالة المشتركة دون طمس الوسم الحي."""
@@ -646,13 +603,22 @@ class DynamicModelMonitor:
         with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
             jobs = []
             for provider_id, provider in self.providers.items():
-                for model in provider.get("models", []):
-                    jobs.append((
-                        pool.submit(self._probe_model, provider_id, provider, model),
-                        f"{provider_id}/{model}"
-                    ))
-            for future, key in jobs:
-                results[key] = future.result()
+                jobs.append((
+                    pool.submit(self._rank_models_for_provider, provider_id, provider),
+                    provider_id
+                ))
+            for future, provider_id in jobs:
+                try:
+                    ranked = future.result()
+                    for model, status, latency in ranked:
+                        key = f"{provider_id}/{model}"
+                        if status == "ok":
+                            results[key] = "available"
+                        else:
+                            results[key] = status
+                except Exception:
+                    # إذا فشل الفحص بالكامل، لا نضيف شيئًا
+                    pass
 
         def _merge(data: Dict[str, Any]) -> None:
             pairs = data.setdefault("pairs", {})
@@ -723,8 +689,8 @@ class DynamicModelMonitor:
     def bind_agent(self, agent_id: str,
                    exclude: Optional[set] = None) -> Optional[Tuple[str, str]]:
         """
-        يبحث عن أول زوج نشط، غير محجوز لوكيل آخر، وغير موجود في exclude.
-        exclude تُمرَّر كـ set من tuples (provider_id, model).
+        يبحث عن أول زوج نشط مع استنزاف كل النماذج داخل المزود قبل الانتقال.
+        الأولوية: استنزاف كل نماذج المزود الحالي → الانتقال للمزود التالي.
         """
         exclude = exclude or set()
         exclude_keys = {f"{p}/{m}" for (p, m) in exclude}
@@ -737,7 +703,7 @@ class DynamicModelMonitor:
             pid_map = data.setdefault("pid_map", {})
             my_pid = os.getpid()
 
-            # تنظيف الحجوزات الميتة (processes انتهت)
+            # تنظيف الحجوزات الميتة
             dead = [a for a, pid in pid_map.items() if pid != my_pid and not _pid_alive(pid)]
             for a in dead:
                 assignments.pop(a, None)
@@ -749,16 +715,21 @@ class DynamicModelMonitor:
                 return
 
             used = {v for k, v in assignments.items() if k != agent_id}
-            for key in self._all_pair_keys():
-                if key in exclude_keys or key in used:
-                    continue
-                state_entry = pairs.get(key)
-                if state_entry is None:
-                    # لم يُوسم بعد — نعتبره متاحًا حتى يثبت العكس
-                    chosen = key
-                    break
-                if state_entry.get("state") == "available":
-                    chosen = key
+            
+            # استنزاف كل النماذج داخل كل مزود قبل الانتقال
+            for provider_id, provider in self.providers.items():
+                for model in provider.get("models", []):
+                    key = f"{provider_id}/{model}"
+                    if key in exclude_keys or key in used:
+                        continue
+                    state_entry = pairs.get(key)
+                    if state_entry is None:
+                        chosen = key
+                        break
+                    if state_entry.get("state") == "available":
+                        chosen = key
+                        break
+                if chosen:
                     break
 
             if chosen:
