@@ -46,16 +46,34 @@ more than one agent needs to know lives here. Anything only orchestrator needs
 4. `@distribution-agent` is never invoked except after an explicit, logged PASS
    decision from orchestrator's `final-audit`. No implicit or partial approval
    triggers publication.
+5. **Orchestrator executes user instructions literally.** The user's words are
+   the specification. Orchestrator does not reinterpret, "improve," scope-creep,
+   or substitute its own judgment about what the user "really meant." If the
+   user says "do X," orchestrator does X — not X-plus-something-it-thinks-
+   would-be-better. Ambiguity is clarified with a single direct question, never
+   silently resolved in favor of orchestrator's own preference.
+6. **Orchestrator routes by role, not by name.** When dispatching a task,
+   orchestrator matches the required capability to each agent's **Role** field
+   in this registry — not to the agent's name or prior association. The registry
+   is the single source of truth for role→agent mapping. If multiple agents
+   list overlapping roles, prefer the one with the narrower scope that still
+   covers the task.
 Any agent card below that appears to route output directly to another named
 agent instead of to `orchestrator-agent` is a bug in that card — flag it,
 don't implement it.
-6. **Any agent receiving a message directly from the user** (rather than from
+7. **Any agent receiving a message directly from the user** (rather than from
    `orchestrator-agent`) **MUST NOT execute the task.** It must respond with:
    "This task requires orchestration. Routing to @orchestrator-agent now." and
    the orchestrator picks up from there with the proper evaluation →
    recommendation → confirmation → audit flow. No agent delivers results
    directly to the user under any circumstances. This prevents the bypass of
    `final-audit`, budget tracking, and safety screening.
+7. **`orchestrator-agent` is the sole interlocutor with the user.** Only
+   orchestrator-agent may deliver results to the user. No other agent may
+   respond to the user directly — ever. All agent output routes through
+   orchestrator, which audits it and delivers it verbatim. This rule applies
+   regardless of how the user addresses another agent — the agent must route
+   through orchestrator, not respond.
 
 ## Hub-and-Spoke Topology
 

@@ -1,0 +1,65 @@
+providers:
+  - id: local
+    base_url: http://localhost:3001/v1
+    key_env: HERMES_FREELMAPI_KEY
+    models:
+      - auto
+      - gpt-oss-120b
+      - deepseek-v4-flash-0731
+      - nemotron-3-ultra-free
+      - dots3-note-preview
+
+  - id: FreeLLMAPI
+    base_url: http://localhost:3001/v1
+    key_env: HERMES_FREELMAPI_KEY
+    models:
+      - auto
+      - gpt-oss-120b
+      - nemotron-3-ultra-free
+      - dots3-note-preview
+
+  - id: opencode
+    base_url: https://opencode.ai/zen/v1
+    key_env: OPENCODE_API_KEY
+    models:
+      - nemotron-3-ultra-free
+      - nemotron-3.5-lightning-free
+      - muse-spark-1.3-contributor-free
+      - claude-sonnet-4-6
+      - gemini-3.1-pro
+
+  - id: opencode-free
+    base_url: https://opencode.ai/zen/v1
+    key_env: OPENCODE_API_KEY
+    models:
+      - nemotron-3-ultra-free
+      - nemotron-3.5-lightning-free
+      - muse-spark-1.3-contributor-free
+      - deepseek-v4-flash-free
+
+  - id: nous
+    base_url: https://inference-api.nousresearch.com/v1
+    key_env: NOUS_API_KEY
+    models:
+      - hermes-4-70b
+      - hermes-4-405b
+      - meituan/longcat-2.0:free
+      - upstage/solar-pro4:free
+
+  - id: nvidia
+    base_url: https://integrate.api.nvidia.com/v1
+    key_env: NVIDIA_API_KEY
+    models:
+      - nvidia/nemotron-3-ultra-550b-a55b
+      - nvidia/nemotron-3-super-120b-a12b
+      - nvidia/nemotron-3.5-lightning-30b-a3b
+      - nvidia/llama-4-maverick
+
+  - id: openrouter
+    base_url: https://openrouter.ai/api/v1
+    key_env: OPENROUTER_API_KEY
+    models:
+      - google/gemini-3.5-flash
+      - anthropic/claude-sonnet-4-6
+      - nvidia/nemotron-3-ultra-550b-a55b:free
+      - nvidia/nemotron-3-super-120b-a12b:free
