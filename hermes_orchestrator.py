@@ -645,12 +645,22 @@ class DynamicModelMonitor:
     def start(self, task_id: str) -> None:
         with self._local_lock:
             if self._thread and self._thread.is_alive():
-                return
+                # إيقاف الفحص السابق وإعادة البدء
+                self._stop_event.set()
+                self._thread.join(timeout=PROBE_TIMEOUT_SECONDS + 1)
             self.active_task_id = task_id
             self._stop_event.clear()
-        # إعادة اكتشاف المزودين قبل بدء المهمة
+
+        # إعادة اكتشاف المزودين قبل كل مهمة
         self._ensure_providers_fresh()
-        print(f"  🔎 [model-monitor] بدء الفحص الديناميكي للمهمة {task_id}")
+        # مسح الوسوم القديمة (إن وُجدت) لفحص نظيف
+        def _clear_scan(data):
+            data["pairs"] = {k: v for k, v in data.get("pairs", {}).items()
+                            if v.get("source") == "live"}
+        self.store.mutate(_clear_scan)
+
+        print(f"  🔎 [model-monitor] بدء فحص ديناميكي للمهمة {task_id} "
+              f"({len(self.providers)} مزود)")
         self._scan_once()
         self._thread = threading.Thread(target=self._scan_loop, daemon=True)
         self._thread.start()
